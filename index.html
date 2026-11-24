@@ -3,38 +3,43 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a1a2e">
+<meta name="theme-color" content="#ffe3ec">
 <title>Café Talk 咖啡館</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:#0f0f1e;color:#fff;font-family:system-ui,sans-serif}
-#app{max-width:480px;min-height:100%;margin:0 auto;background:#1a1a2e;position:relative;padding-bottom:12px}
-#top{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;font-weight:bold;font-size:15px}
+html,body{margin:0;height:100%;color:#5a3e36;font-family:"Nunito","Quicksand","PingFang TC","Noto Sans TC","Microsoft JhengHei",ui-rounded,system-ui,sans-serif;background:#ffe9ef radial-gradient(#ffd3df 2px,transparent 2.5px) 0 0/22px 22px}
+#app{max-width:480px;min-height:100%;margin:0 auto;background:#fff8f0;position:relative;padding:0 0 14px;box-shadow:0 0 24px #e9a7b855}
+#top{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;font-weight:800;font-size:14px;gap:6px}
+#top>span:not(:last-child){background:#fff;border-radius:999px;padding:5px 12px;box-shadow:0 3px 0 #f6d5cc}
 #top button{padding:4px 10px;font-size:16px}
-canvas{width:100%;display:block;touch-action:none}
-#cust{margin:6px 10px;padding:6px 10px;background:#2a2a44;border-radius:12px}
-#ty{font-size:12px;color:#ffd23d}
-#bub{font-size:16px;line-height:1.35;min-height:44px}
-#hint{color:#9aa;font-size:12px;min-height:16px}
-.row{display:flex;flex-wrap:wrap;gap:4px;padding:0 10px 4px}
-.o{flex:1 1 22%;min-height:40px;font-size:12px;padding:3px 1px;border-radius:10px;background:#3b3b63;line-height:1.15;overflow:hidden}
-.o small{display:block;font-size:10px;color:#bbb}
-.o.on{background:#ff8a3d}.o.on small{color:#fff}
-.row.bad .o.on{background:#e11d48}
-#sv{display:block;width:calc(100% - 20px);margin:6px 10px 0}
-button{border:0;border-radius:12px;background:#ff8a3d;color:#fff;font-size:20px;padding:12px 28px}
-button.s{background:#3b3b63}
-button:disabled{opacity:.4}
-.b{font-size:15px;padding:6px 12px}
-.ov{position:absolute;inset:0;background:#1a1a2ef7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;z-index:5;min-height:100%}
+canvas{width:calc(100% - 28px);margin:4px 14px 0;display:block;touch-action:none;border-radius:22px;box-shadow:0 0 0 4px #fff,0 7px 0 4px #f6c9c0}
+#cust{position:relative;margin:18px 14px 12px;padding:8px 12px;background:#fff;border:3px solid #ffd0dc;border-radius:20px;box-shadow:0 4px 0 #ffd0dc}
+#cust:before{content:"";position:absolute;top:-11px;left:36px;width:16px;height:16px;background:#fff;border-left:3px solid #ffd0dc;border-top:3px solid #ffd0dc;transform:rotate(45deg)}
+#ty{font-size:12px;color:#e0709a;font-weight:700}
+#bub{font-size:16px;line-height:1.4;min-height:44px;font-weight:700}
+#hint{color:#a98c84;font-size:12px;min-height:16px}
+.row{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 6px}
+.o{flex:1 1 22%;min-height:42px;font-size:12px;font-weight:700;padding:3px 2px;border-radius:14px;background:#fff;color:#5a3e36;border:2.5px solid #ffd9c7;box-shadow:0 3px 0 #ffd9c7;line-height:1.15;overflow:hidden;font-family:inherit}
+.o small{display:block;font-size:10px;color:#b5948a;font-weight:600}
+.o:active{transform:translateY(2px);box-shadow:0 1px 0 #ffd9c7}
+.o.on{background:linear-gradient(#ff9db8,#ff86a8);color:#fff;border-color:#ff7aa0;box-shadow:0 3px 0 #e0608a}
+.o.on small{color:#fff}
+.row.bad .o.on{background:#ff6b6b;border-color:#e04848;box-shadow:0 3px 0 #b83030}
+button{border:0;border-radius:999px;background:linear-gradient(#ff9db8,#ff86a8);color:#fff;font-size:19px;font-weight:800;padding:12px 28px;font-family:inherit;box-shadow:0 4px 0 #e0608a}
+button.s{background:linear-gradient(#c9b6f2,#b39ce8);box-shadow:0 4px 0 #8f78cc}
+button:active{transform:translateY(2px)}
+button:disabled{opacity:.45}
+#sv{display:block;width:calc(100% - 28px);margin:10px 14px 0;background:linear-gradient(#ffb36b,#ff9a4d);box-shadow:0 5px 0 #d97a2c;font-size:21px}
+.b{font-size:14px;padding:6px 14px}
+.ov{position:absolute;inset:0;background:#fff4e8f8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;z-index:5;min-height:100%}
 .ov.top{justify-content:flex-start}
 .hide{display:none!important}
-h1{margin:0;font-size:30px}
-h3{margin:12px 0 4px;color:#ff8a3d;text-align:left;width:100%}
-.r{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;padding:6px 4px;border-bottom:1px solid #fff2;font-size:15px;text-align:left}
+h1{margin:0;font-size:30px;color:#ff6f9c;text-shadow:0 3px 0 #fff}
+h3{margin:12px 0 4px;color:#e0709a;text-align:left;width:100%}
+.r{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;padding:6px 4px;border-bottom:2px dotted #f2cfc2;font-size:15px;text-align:left}
 .w{width:100%}
-small{color:#aab}
-#fl{position:fixed;left:0;right:0;top:35%;text-align:center;font-size:28px;font-weight:bold;pointer-events:none;text-shadow:0 2px 6px #000;z-index:9}
+small{color:#a98c84}
+#fl{position:fixed;left:0;right:0;top:35%;text-align:center;font-size:30px;font-weight:900;pointer-events:none;-webkit-text-stroke:6px #fff;paint-order:stroke fill;z-index:9}
 </style></head>
 <body><div id="app">
 <div id="top"><span id="d"></span><span id="t"></span><span id="c"></span><span><button class="s" id="hb">💡</button> <button class="s" id="sb">📖</button></span></div>
@@ -171,7 +176,7 @@ function upd(dt){
     if(mv)c.x+=Math.sign(dx)*Math.min(Math.abs(dx),75*dt);
     c.y+=(c.ty-c.y)*Math.min(1,dt*6);c.by=mv?Math.sin(tm*14+c.id)*2.5:0;
     if(!mv){if(c.st=='in')c.st='wait';else if(c.st=='toSeat'){c.st='sit';c.tm=7+Math.random()*4}}
-    if(c.st=='wait'){c.pat-=dt;if(c.pat<=0){lost++;c.st='out';c.tx=-40;c.mad=1;flash('😠 客人離開了','#f66')}}
+    if(c.st=='wait'){c.pat-=dt;if(c.pat<=0){lost++;c.st='out';c.tx=-40;c.mad=1;flash('😠 客人離開了','#e5484d')}}
     if(c.st=='sit'){c.tm-=dt;if(c.tm<=0){c.st='out';c.tx=-40;c.ty=130;seats[c.seat]=0}}
   });
   cs=cs.filter(c=>!(c.st=='out'&&c.x<-30));
@@ -181,20 +186,20 @@ function upd(dt){
 function serve(){
   const c=cs.find(c=>c.id==selId);if(!run||!c||c.st!='wait')return;
   const s=c.sel,o=c.o;
-  if(!s.size||!s.temp||!s.drink)return flash('還沒選完喔','#fc6');
+  if(!s.size||!s.temp||!s.drink)return flash('還沒選完喔','#e69a00');
   const b=diff(o,s);
   if(!b.length){
     let p=BASE[o.drink]+{S:0,M:10,L:20}[o.size]+o.ex.length*10+(o.syrup!='none'?10:0)+o.food.length*40+o.misc.length*5;
     p=Math.round(p*TY[c.t].m*(1+.15*(S.beans||0))*(c.pat>c.pm*.6?1.1:1));
     C+=p;dayC+=p;served++;
     Object.keys(RN).forEach(r=>[].concat(o[r]).forEach(v=>{const k=r+':'+v;if(P[k]>0)P[k]--}));
-    save();ls.set('c3p',P);vib(30);flash('✔ +'+p,'#4f4');
+    save();ls.set('c3p',P);vib(30);flash('✔ +'+p,'#2fb36b');fx.push({x:c.x,y:c.y-20,t:0});
     const seat=o.for=='here'?seats.indexOf(0):-1;
     c.drink=o.temp=='ice'?'🧋':'☕';
     if(seat>=0){seats[seat]=1;c.seat=seat;c.st='toSeat';c.tx=SE[seat];c.ty=112}else{c.st='out';c.tx=-40}
   }else{
     b.forEach(r=>[].concat(o[r]).forEach(v=>{const k=r+':'+v;P[k]=(P[k]||0)+1;miss[k]=1}));
-    ls.set('c3p',P);bad=b;c.pat-=c.pm*.2;vib(100);flash('✘ 不對喔','#fa4');panel();
+    ls.set('c3p',P);bad=b;c.pat-=c.pm*.2;vib(100);flash('✘ 不對喔','#ff7a45');panel();
     setTimeout(()=>{bad=[];panel()},1200);
   }
 }
@@ -219,29 +224,41 @@ function hud(){
   $('bub').textContent=c?'“'+c.txt+'”':(inDay?'等待客人上門…':'');
   $('hint').textContent=c&&hint?'💡 '+c.zh:'';
 }
+const fx=[];
+function rr(x,y,w,h,r,f,k){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath();g.fillStyle=f;g.fill();if(k){g.strokeStyle=k;g.lineWidth=2;g.stroke()}}
 function drawC(c){
-  const y=c.y+c.by;g.font='30px serif';g.fillStyle='#fff';g.fillText(c.face,c.x,y);
-  if(c.drink){g.font='16px serif';g.fillText(c.drink,c.x+16,y+8)}
-  if(c.mad){g.font='16px serif';g.fillText('😠',c.x,y-24)}
+  const y=c.y+c.by;
+  g.fillStyle='#0002';g.beginPath();g.ellipse(c.x,c.y+15,13,4,0,0,7);g.fill();
+  g.font='32px serif';g.fillStyle='#fff';g.fillText(c.face,c.x,y);
+  if(c.drink){g.font='16px serif';g.fillText(c.drink,c.x+17,y+8)}
+  if(c.mad){g.font='18px serif';g.fillText('💢',c.x,y-26)}
   if(c.st=='wait'){
     const q=Math.max(0,c.pat/c.pm);
-    g.fillStyle='#000a';g.fillRect(c.x-14,y-26,28,5);
-    g.fillStyle=q>.6?'#4ade80':q>.3?'#facc15':'#f87171';g.fillRect(c.x-14,y-26,28*q,5);
-    g.font='12px serif';g.fillStyle='#fff';g.fillText(TY[c.t].e,c.x+18,y-22);
-    g.font='14px serif';if(c.id==selId){g.fillStyle='#ffd23d';g.fillText('▼',c.x,y-35)}else g.fillText('💬',c.x,y-35);
+    rr(c.x-16,y-31,32,9,4,'#fff','#f3c9bd');
+    if(q>.03)rr(c.x-14,y-29,28*q,5,2,q>.6?'#6fd99a':q>.3?'#ffcf5a':'#ff7a7a');
+    g.font='12px serif';g.fillStyle='#fff';g.fillText(TY[c.t].e,c.x+21,y-26);
+    if(c.id==selId){g.font='bold 16px sans-serif';g.fillStyle='#ff5c8a';g.fillText('▼',c.x,y-42+Math.sin(tm*6)*2)}else{g.font='14px serif';g.fillText('💬',c.x,y-41)}
   }
 }
 function scene(){
   g.textAlign='center';g.textBaseline='middle';
-  g.fillStyle='#2b2440';g.fillRect(0,0,360,150);
-  g.fillStyle='#3d2f2a';g.fillRect(0,96,360,54);g.fillStyle='#4a3a33';g.fillRect(0,96,360,4);
-  g.fillStyle='#7a4b2a';g.fillRect(0,36,22,64);g.fillStyle='#ffd23d';g.fillRect(16,68,3,3);
-  g.fillStyle='#4aa3d844';g.fillRect(245,22,95,44);g.strokeStyle='#fff3';g.strokeRect(245,22,95,44);
-  g.font='bold 13px sans-serif';g.fillStyle='#ffd23d';g.fillText('☕ OPEN',160,14);
-  g.font='30px serif';g.fillText('🧑‍🍳',160,80+Math.sin(tm*2)*1.5);g.font='20px serif';g.fillText('☕',125,76);g.fillText('🪴',348,84);g.fillText('🖼️',60,50);
-  g.fillStyle='#8b5a2b';g.fillRect(95,92,135,24);g.fillStyle='#b07a43';g.fillRect(95,92,135,5);
+  g.fillStyle='#ffe3ec';g.fillRect(0,0,360,150);
+  g.fillStyle='#ffc8d8';for(let i=0;i<18;i++)for(let j=0;j<4;j++){g.beginPath();g.arc(10+i*20+(j%2)*10,30+j*17,2,0,7);g.fill()}
+  for(let i=0;i<12;i++)for(let j=0;j<4;j++){g.fillStyle=(i+j)%2?'#fff0e0':'#ffe2c9';g.fillRect(i*30,98+j*13,30,13)}
+  g.fillStyle='#f5b8a0';g.fillRect(0,94,360,5);
+  for(let i=0;i<18;i++){g.fillStyle=i%2?'#fff':'#ff9fb8';g.fillRect(i*20,0,20,10);g.beginPath();g.arc(i*20+10,10,10,0,Math.PI);g.fill()}
+  rr(120,24,80,18,8,'#fff8e8','#e8b99a');g.font='bold 12px sans-serif';g.fillStyle='#8a5a44';g.fillText('Café Talk',160,33);
+  rr(245,28,95,42,8,'#d6f1ff','#fff');g.fillStyle='#fff';g.fillRect(291,28,3,42);g.fillRect(245,48,95,3);g.font='14px serif';g.fillText('☁️',268,40);
+  rr(0,40,26,58,6,'#f2a977','#e08a55');g.fillStyle='#e69a00';g.beginPath();g.arc(20,70,2.5,0,7);g.fill();g.font='12px serif';g.fillText('🔔',13,34);
+  rr(100,58,120,5,2,'#e8b99a');g.font='16px serif';g.fillText('🫖',112,51);g.fillText('🌷',134,51);g.fillText('🍵',208,51);
+  g.font='30px serif';g.fillText('🧑‍🍳',160,80+Math.sin(tm*2)*1.5);
+  g.font='22px serif';g.fillText('🪴',346,82);
+  rr(95,92,135,26,8,'#ffc9a8');rr(95,92,135,8,5,'#fff0dd');g.fillStyle='#fff6';for(let i=0;i<7;i++){g.beginPath();g.arc(108+i*19,109,3,0,7);g.fill()}
+  g.font='16px serif';g.fillText('🍰',110,86);g.font='18px serif';g.fillText('☕',215,86);
   cs.slice().sort((a,b)=>a.y-b.y).forEach(drawC);
-  g.fillStyle='#6b4423';SE.forEach(sx=>g.fillRect(sx-16,121,32,5));
+  SE.forEach(sx=>{g.fillStyle='#d9a066';g.fillRect(sx-2,126,4,8);rr(sx-16,120,32,7,3,'#f2c48d','#d9a066')});
+  g.font='16px serif';fx.forEach(f=>{f.t+=.033;g.globalAlpha=Math.max(0,1-f.t);g.fillText('💖',f.x,f.y-f.t*30)});g.globalAlpha=1;
+  for(let i=fx.length-1;i>=0;i--)if(fx[i].t>=1)fx.splice(i,1);
 }
 let last=0;
 function loop(t){
@@ -262,7 +279,7 @@ $('pn').onclick=e=>{
   vib(8);panel();
 };
 $('sv').onclick=serve;
-$('hb').onclick=()=>{hint=!hint;ls.set('c3h',hint);flash(hint?'💡 中文提示：開':'💡 中文提示：關','#ffd23d')};
+$('hb').onclick=()=>{hint=!hint;ls.set('c3h',hint);flash(hint?'💡 中文提示：開':'💡 中文提示：關','#e69a00')};
 $('sb').onclick=()=>sheet('hideOv()');
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&run)show('<h1>⏸ 暫停</h1><button onclick="hideOv()">繼續</button>')});
 setInterval(()=>{if(lastSel!=selId&&run)fixSel()},200);
