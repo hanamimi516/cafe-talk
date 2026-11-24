@@ -9,18 +9,15 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;background:#0f0f1e;color:#fff;font-family:system-ui,sans-serif}
 #app{max-width:480px;min-height:100%;margin:0 auto;background:#1a1a2e;position:relative;padding-bottom:12px}
-#top{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;font-weight:bold;font-size:15px}
+#top{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;font-weight:bold;font-size:15px}
 #top button{padding:4px 10px;font-size:16px}
-#cust{margin:0 10px 8px;padding:8px 10px;background:#2a2a44;border-radius:14px}
-#who{display:flex;align-items:center;gap:8px;font-size:14px}
-#face{font-size:30px}
-#bar{flex:1;height:10px;background:#0006;border-radius:5px;overflow:hidden}
-#fill{height:100%}
-#bub{margin-top:6px;font-size:17px;line-height:1.35;min-height:46px}
+canvas{width:100%;display:block;touch-action:none}
+#cust{margin:6px 10px;padding:6px 10px;background:#2a2a44;border-radius:12px}
+#ty{font-size:12px;color:#ffd23d}
+#bub{font-size:16px;line-height:1.35;min-height:44px}
 #hint{color:#9aa;font-size:12px;min-height:16px}
-#pn{min-height:300px}
-.row{display:flex;gap:4px;padding:0 10px 4px}
-.o{flex:1;min-height:42px;font-size:12px;padding:3px 1px;border-radius:10px;background:#3b3b63;line-height:1.15;overflow:hidden}
+.row{display:flex;flex-wrap:wrap;gap:4px;padding:0 10px 4px}
+.o{flex:1 1 22%;min-height:40px;font-size:12px;padding:3px 1px;border-radius:10px;background:#3b3b63;line-height:1.15;overflow:hidden}
 .o small{display:block;font-size:10px;color:#bbb}
 .o.on{background:#ff8a3d}.o.on small{color:#fff}
 .row.bad .o.on{background:#e11d48}
@@ -28,7 +25,7 @@ html,body{margin:0;height:100%;background:#0f0f1e;color:#fff;font-family:system-
 button{border:0;border-radius:12px;background:#ff8a3d;color:#fff;font-size:20px;padding:12px 28px}
 button.s{background:#3b3b63}
 button:disabled{opacity:.4}
-.b{font-size:16px;padding:6px 12px}
+.b{font-size:15px;padding:6px 12px}
 .ov{position:absolute;inset:0;background:#1a1a2ef7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;z-index:5;min-height:100%}
 .ov.top{justify-content:flex-start}
 .hide{display:none!important}
@@ -37,11 +34,12 @@ h3{margin:12px 0 4px;color:#ff8a3d;text-align:left;width:100%}
 .r{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;padding:6px 4px;border-bottom:1px solid #fff2;font-size:15px;text-align:left}
 .w{width:100%}
 small{color:#aab}
-#fl{position:fixed;left:0;right:0;top:40%;text-align:center;font-size:28px;font-weight:bold;pointer-events:none;text-shadow:0 2px 6px #000;z-index:9}
+#fl{position:fixed;left:0;right:0;top:35%;text-align:center;font-size:28px;font-weight:bold;pointer-events:none;text-shadow:0 2px 6px #000;z-index:9}
 </style></head>
 <body><div id="app">
 <div id="top"><span id="d"></span><span id="t"></span><span id="c"></span><span><button class="s" id="hb">💡</button> <button class="s" id="sb">📖</button></span></div>
-<div id="cust"><div id="who"><span id="face">🚶</span><span id="ty"></span><div id="bar"><div id="fill"></div></div></div><div id="bub"></div><div id="hint"></div></div>
+<canvas id="cv" width="360" height="150"></canvas>
+<div id="cust"><div id="ty"></div><div id="bub"></div><div id="hint"></div></div>
 <div id="pn"></div>
 <button id="sv">✔ 出餐 Serve</button>
 <div id="fl" class="hide"></div>
@@ -51,148 +49,223 @@ small{color:#aab}
 const W={
 size:{S:['Small','小杯'],M:['Medium','中杯'],L:['Large','大杯']},
 temp:{hot:['Hot','熱'],ice:['Iced','冰']},
-drink:{ame:['Americano','美式'],lat:['Latte','拿鐵'],cap:['Cappuccino','卡布奇諾'],moc:['Mocha','摩卡'],mat:['Matcha latte','抹茶拿鐵']},
-milk:{none:['No milk','不加奶'],whole:['Whole milk','全脂牛奶'],oat:['Oat milk','燕麥奶']},
-ex:{shot:['Extra shot','多一份濃縮'],ice:['Less ice','少冰'],sug:['No sugar','無糖']},
-food:{cro:['Croissant','可頌'],chz:['Cheesecake','起司蛋糕']},
+drink:{ame:['Americano','美式'],lat:['Latte','拿鐵'],cap:['Cappuccino','卡布奇諾'],fla:['Flat white','馥列白'],esp:['Espresso','濃縮咖啡'],mac:['Macchiato','瑪奇朵'],moc:['Mocha','摩卡'],mat:['Matcha latte','抹茶拿鐵'],hc:['Hot chocolate','熱巧克力'],chai:['Chai latte','印度奶茶'],cb:['Cold brew','冷萃咖啡']},
+milk:{none:['No milk','不加奶'],whole:['Whole milk','全脂牛奶'],oat:['Oat milk','燕麥奶'],alm:['Almond milk','杏仁奶'],soy:['Soy milk','豆奶'],skim:['Skim milk','脫脂牛奶']},
+syrup:{none:['No syrup','不加糖漿'],van:['Vanilla syrup','香草糖漿'],car:['Caramel syrup','焦糖糖漿'],haz:['Hazelnut syrup','榛果糖漿']},
+ex:{shot:['Extra shot','多一份濃縮'],ice:['Less ice','少冰'],sug:['No sugar','無糖'],whip:['Whipped cream','鮮奶油']},
+food:{cro:['Croissant','可頌'],chz:['Cheesecake','起司蛋糕'],muf:['Muffin','馬芬'],bag:['Bagel','貝果'],cook:['Cookie','餅乾'],sand:['Sandwich','三明治'],wafl:['Waffle','鬆餅'],brow:['Brownie','布朗尼']},
+misc:{str:['Straw','吸管'],nap:['Napkin','餐巾紙'],rec:['Receipt','收據']},
 for:{here:['For here','內用'],go:['To go','外帶']}};
-const RN={size:'尺寸',temp:'冷熱',drink:'飲料',milk:'奶',ex:'加選',food:'餐點',for:'用餐'};
-const BASE={ame:50,lat:65,cap:70,moc:80,mat:85};
-const TY={tour:{n:'Tourist 觀光客',e:'🧳',p:26,m:1},rush:{n:'Rushed 趕時間',e:'🏃',p:14,m:1.15},reg:{n:'Regular 熟客',e:'🧓',p:22,m:1.25}};
+const RN={size:1,temp:1,drink:1,milk:1,syrup:1,ex:1,food:1,misc:1,for:1};
+const BASE={ame:50,lat:65,cap:70,fla:75,esp:45,mac:65,moc:80,mat:85,hc:70,chai:80,cb:75};
+const FP={cro:'a croissant',chz:'a slice of cheesecake',muf:'a muffin',bag:'a bagel',cook:'a cookie',sand:'a sandwich',wafl:'a waffle',brow:'a brownie'};
+const MP={str:'a straw',nap:'a napkin',rec:'a receipt'},EP={shot:'an extra shot',ice:'less ice',sug:'no sugar',whip:'whipped cream'};
+const TY={tour:{n:'Tourist 觀光客',e:'🧳',p:45,m:1},rush:{n:'Rushed 趕時間',e:'🏃',p:28,m:1.15},reg:{n:'Regular 熟客',e:'⭐',p:38,m:1.25}};
+const FACES=['🧑','👩','👨','🧔','👵','👴','👧','👱'];
 const SHOP=[
-{k:'beans',n:'Better beans 好咖啡豆',d:'所有飲料收入 +15%',c:[100,250,500]},
-{k:'chairs',n:'Cozy chairs 舒適座椅',d:'客人耐心 +20%',c:[100,250,500]},
-{k:'cap',n:'Cappuccino 卡布奇諾',d:'解鎖新飲料',c:[150]},
-{k:'moc',n:'Mocha 摩卡',d:'解鎖新飲料',c:[250]},
-{k:'mat',n:'Matcha latte 抹茶拿鐵',d:'解鎖新飲料',c:[300]},
-{k:'oat',n:'Oat milk 燕麥奶',d:'解鎖燕麥奶選項',c:[150]},
-{k:'ext',n:'Extras 加選項目',d:'解鎖 Extra shot / Less ice / No sugar',c:[200]},
-{k:'pas',n:'Pastry case 甜點櫃',d:'解鎖 Croissant / Cheesecake',c:[250]}];
-const PH=[['Hello! One large iced latte, to go, please.','你好！請給我一杯大杯冰拿鐵，外帶。'],['Could I get a latte with oat milk?','我可以點一杯燕麥奶拿鐵嗎？'],['No sugar, please.','請不要加糖。'],['For here or to go?','內用還是外帶？'],['Can I pay by card?','可以刷卡嗎？']];
-const $=id=>document.getElementById(id),ov=$('ov');
+{k:'beans',n:'Better beans 好咖啡豆',d:'所有收入 +15%',c:[100,250,500],g:1},
+{k:'chairs',n:'Cozy chairs 舒適座椅',d:'客人耐心 +20%',c:[100,250,500],g:1},
+{k:'milk',n:'Milk pack 牛奶包',d:'Oat / Almond / Soy / Skim milk',c:[150],g:2},
+{k:'dA',n:'Drinks pack A 飲料包 A',d:'Cappuccino / Flat white / Espresso / Macchiato',c:[200],g:2},
+{k:'ext',n:'Extras pack 加選包',d:'Extra shot / Less ice / No sugar / Whipped cream',c:[200],g:3},
+{k:'pasA',n:'Pastry pack A 甜點包 A',d:'Croissant / Cheesecake / Muffin / Bagel',c:[250],g:3},
+{k:'syr',n:'Syrup pack 糖漿包',d:'Vanilla / Caramel / Hazelnut',c:[250],g:4},
+{k:'dB',n:'Drinks pack B 飲料包 B',d:'Mocha / Matcha latte / Hot chocolate / Chai latte / Cold brew',c:[300],g:5},
+{k:'misc',n:'Service pack 服務包',d:'Straw / Napkin / Receipt',c:[200],g:5},
+{k:'pasB',n:'Pastry pack B 甜點包 B',d:'Cookie / Sandwich / Waffle / Brownie',c:[300],g:6}];
+const PH=[['What can I get for you?','請問要點什麼？'],['For here or to go?','內用還是外帶？'],['Would you like anything else?','還需要其他的嗎？'],['What size would you like?','你要什麼尺寸？'],['Do you have oat milk?','你們有燕麥奶嗎？'],['No sugar, please.','請不要加糖。'],['Can I get a receipt, please?','可以給我收據嗎？'],['Can I pay by card?','可以刷卡嗎？'],['Is this seat taken?','這個位子有人坐嗎？'],['Could I get some water?','可以給我一些水嗎？']];
+const $=id=>document.getElementById(id),ov=$('ov'),g=$('cv').getContext('2d');
 const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const vib=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
-const D=ls.get('c2',{});
-let C=D.C||0,S=D.S||{},day=D.day||1,best=D.best||0,hint=ls.get('c2h',true);
-let T=90,cur=null,sel,pat=1,patMax=1,served=0,lost=0,dayC=0,miss={},bad=[],run=false,inDay=false,lastSum='';
-const save=()=>ls.set('c2',{C,S,day,best});
-const fresh=()=>({size:null,temp:null,drink:null,milk:'none',ex:[],food:[],for:'here'});
-function avail(r){
-  if(r=='drink')return['ame','lat'].concat(['cap','moc','mat'].filter(k=>S[k]));
-  if(r=='milk')return['none','whole'].concat(S.oat?['oat']:[]);
-  if(r=='ex')return S.ext?['shot','ice','sug']:[];
-  if(r=='food')return S.pas?['cro','chz']:[];
-  return Object.keys(W[r]);
-}
+const D=ls.get('c3',{});
+let C=D.C||0,S=D.S||{},day=D.day||1,best=D.best||0,hint=ls.get('c3h',true),P=ls.get('c3p',{});
+let T=90,cs=[],seats=[0,0,0],selId=0,lastSel=-1,nid=1,arr=0,tm=0,served=0,lost=0,dayC=0,miss={},bad=[],run=false,inDay=false,lastSum='';
+const SL=[118,158,198],SE=[255,295,335];
+const save=()=>ls.set('c3',{C,S,day,best});
+const fresh=()=>({size:null,temp:null,drink:null,milk:'none',syrup:'none',ex:[],food:[],misc:[],for:'here'});
+const U=(k,a)=>S[k]?a:[];
+function avail(r){switch(r){
+case'drink':return['ame','lat',...U('dA',['cap','fla','esp','mac']),...U('dB',['moc','mat','hc','chai','cb'])];
+case'milk':return['none','whole',...U('milk',['oat','alm','soy','skim'])];
+case'syrup':return S.syr?['none','van','car','haz']:[];
+case'ex':return U('ext',['shot','ice','sug','whip']);
+case'food':return[...U('pasA',['cro','chz','muf','bag']),...U('pasB',['cook','sand','wafl','brow'])];
+case'misc':return U('misc',['str','nap','rec']);
+default:return Object.keys(W[r])}}
+function pickW(r,a){const w=a.map(v=>1+Math.min(3,P[r+':'+v]||0));let x=Math.random()*w.reduce((p,q)=>p+q,0);for(let i=0;i<a.length;i++)if((x-=w[i])<=0)return a[i];return a[0]}
 function makeOrder(t){
-  const dr=pick(avail('drink')),ice=Math.random()<.5;
-  const o={size:pick(['S','M','L']),temp:ice?'ice':'hot',drink:dr,milk:dr=='ame'?'none':(S.oat&&Math.random()<.4?'oat':'whole'),ex:[],food:[],for:Math.random()<.5?'here':'go'};
-  if(S.ext&&t!='tour'&&Math.random()<.5){
-    const c=['sug'];if(dr!='mat')c.push('shot');if(ice)c.push('ice');
-    o.ex=[pick(c)];
-    if(t=='reg'&&Math.random()<.3){const r=c.filter(x=>x!=o.ex[0]);if(r.length)o.ex.push(pick(r))}
+  const dr=pickW('drink',avail('drink'));
+  const temp=['hc','esp','mac'].includes(dr)?'hot':dr=='cb'?'ice':pick(['hot','ice']);
+  const o={size:pickW('size',['S','M','L']),temp,drink:dr,milk:['ame','esp','mac','cb'].includes(dr)?'none':pickW('milk',avail('milk').filter(x=>x!='none')),syrup:'none',ex:[],food:[],misc:[],for:pick(['here','go'])};
+  const sy=avail('syrup');if(t!='tour'&&sy.length&&Math.random()<.35)o.syrup=pickW('syrup',sy.filter(x=>x!='none'));
+  if(t!='tour'){
+    const c=avail('ex').filter(e=>(e!='shot'||!['mat','hc','chai','esp'].includes(dr))&&(e!='ice'||temp=='ice')&&(e!='whip'||['moc','hc'].includes(dr)));
+    if(c.length&&Math.random()<.5){o.ex=[pickW('ex',c)];if(t=='reg'&&c.length>1&&Math.random()<.3)o.ex.push(pickW('ex',c.filter(x=>x!=o.ex[0])))}
   }
-  if(S.pas&&(t=='reg'?Math.random()<.6:Math.random()<.15))o.food=[pick(['cro','chz'])];
+  const f=avail('food');
+  if(f.length&&Math.random()<(t=='reg'?.6:.15)){o.food=[pickW('food',f)];if(t=='reg'&&f.length>1&&Math.random()<.25)o.food.push(pickW('food',f.filter(x=>x!=o.food[0])))}
+  const m=avail('misc');if(t=='reg'&&m.length&&Math.random()<.4)o.misc=[pickW('misc',m)];
   return o;
 }
+const J=a=>a.length>1?a.slice(0,-1).join(', ')+' and '+a[a.length-1]:a[0];
 function say(o,t){
-  const lc=k=>W[k][o[k]][0].toLowerCase(),L=[];
-  if(o.milk!='none')L.push(lc('milk'));
-  const exm={shot:'an extra shot',ice:'less ice',sug:'no sugar'};o.ex.forEach(e=>L.push(exm[e]));
-  const wi=L.length?' with '+(L.length>1?L.slice(0,-1).join(', ')+' and '+L[L.length-1]:L[0]):'';
-  const core=`${lc('size')} ${lc('temp')} ${lc('drink')}${wi}`;
-  const fd=o.food.map(f=>f=='cro'?'a croissant':'a slice of cheesecake')[0],fr=lc('for'),Cp=s=>s[0].toUpperCase()+s.slice(1);
+  const lc=(k,v)=>W[k][v][0].toLowerCase(),L=[];
+  if(o.milk!='none')L.push(lc('milk',o.milk));
+  if(o.syrup!='none')L.push(lc('syrup',o.syrup));
+  o.ex.forEach(e=>L.push(EP[e]));
+  const imp=['hc','cb'].includes(o.drink);
+  const core=`${lc('size',o.size)} ${imp?'':lc('temp',o.temp)+' '}${lc('drink',o.drink)}`+(L.length?' with '+J(L):'');
+  const fd=o.food.length?J(o.food.map(f=>FP[f])):'',fr=lc('for',o.for),Cp=s=>s[0].toUpperCase()+s.slice(1);
+  const ms=o.misc.length?' Could I also get '+J(o.misc.map(m=>MP[m]))+'?':'';
   if(t=='tour')return pick(['Hello! One ','Hi, I would like a '])+core+', '+fr+', please.'+(fd?' And '+fd+'.':'');
-  if(t=='rush')return Cp(core)+(fd?', and '+fd:'')+', '+fr+'. Thanks!';
-  return 'Good morning! Could I get a '+core+(fd?', and '+fd:'')+'? '+Cp(fr)+', please.';
+  if(t=='rush')return Cp(core)+(fd?', and '+fd:'')+', '+fr+'. Thanks!'+ms;
+  return 'Good morning! Could I get a '+core+(fd?', and '+fd:'')+'? '+Cp(fr)+', please.'+ms;
 }
-const zhOf=o=>[W.size[o.size][1]+W.temp[o.temp][1]+W.drink[o.drink][1]].concat(o.milk!='none'?[W.milk[o.milk][1]]:[],o.ex.map(e=>W.ex[e][1]),o.food.map(f=>W.food[f][1]),[W.for[o.for][1]]).join('・');
+function zhOf(o){
+  const a=[W.size[o.size][1]+(['hc','cb'].includes(o.drink)?'':W.temp[o.temp][1])+W.drink[o.drink][1]];
+  if(o.milk!='none')a.push(W.milk[o.milk][1]);if(o.syrup!='none')a.push(W.syrup[o.syrup][1]);
+  o.ex.forEach(e=>a.push(W.ex[e][1]));o.food.forEach(f=>a.push(W.food[f][1]));o.misc.forEach(m=>a.push(W.misc[m][1]));a.push(W.for[o.for][1]);
+  return a.join('・');
+}
 function diff(o,s){
   const b=[];
-  ['size','temp','drink','milk','for'].forEach(k=>{if(o[k]!=s[k])b.push(k)});
-  ['ex','food'].forEach(k=>{if([...o[k]].sort()+''!=[...s[k]].sort()+'')b.push(k)});
+  ['size','temp','drink','milk','syrup','for'].forEach(k=>{if(o[k]!=s[k])b.push(k)});
+  ['ex','food','misc'].forEach(k=>{if([...o[k]].sort()+''!=[...s[k]].sort()+'')b.push(k)});
   return b;
 }
 function flash(s,c){const f=$('fl');f.textContent=s;f.style.color=c||'#fff';f.classList.remove('hide');clearTimeout(f.t);f.t=setTimeout(()=>f.classList.add('hide'),900)}
 function show(h,top){run=false;scrollTo(0,0);ov.className='ov'+(top?' top':'');ov.innerHTML=h}
 function hideOv(){ov.classList.add('hide');run=inDay}
-function menu(){inDay=false;cur=null;draw();panel();show(`<h1>☕ Café Talk</h1><p>聽懂客人的英文點單<br>選對選項再出餐，賺錢升級咖啡館</p><div>🏆 最高天數 <b>${best}</b>　💰 存款 <b>${C}</b></div><button onclick="startDay()">開始 第 ${day} 天</button><button class="s" onclick="shop('menu()')">🛒 商店</button><button class="s" onclick="sheet('menu()')">📖 單字小抄</button><button class="s b" onclick="if(confirm('確定要清除所有存檔？')){localStorage.removeItem('c2');location.reload()}">🗑 重置存檔</button>`)}
+function menu(){inDay=false;cs=[];seats=[0,0,0];selId=0;lastSel=-1;show(`<h1>☕ Café Talk</h1><p>聽懂客人的英文點單，同時照顧好幾位客人<br>賺錢解鎖新單字包</p><div>🏆 最高天數 <b>${best}</b>　💰 存款 <b>${C}</b></div><button onclick="startDay()">開始 第 ${day} 天</button><button class="s" onclick="shop('menu()')">🛒 商店</button><button class="s" onclick="sheet('menu()')">📖 單字小抄</button><button class="s b" onclick="if(confirm('確定要清除所有存檔？')){localStorage.removeItem('c3');localStorage.removeItem('c3p');location.reload()}">🗑 重置存檔</button>`)}
 function sheet(back){
   const rows=a=>a.map(([x,y])=>`<div class=r><span>${x}</span><span>${y}</span></div>`).join('');
-  show('<h1>📖 單字小抄</h1><div class=w>'+Object.keys(RN).map(r=>`<h3>${RN[r]}</h3>`+rows(Object.values(W[r]))).join('')+'<h3>💬 常用句子</h3>'+rows(PH)+`</div><button style="margin:12px 0" onclick="${back}">返回</button>`,1);
+  const tot=Object.values(W).reduce((a,o)=>a+Object.keys(o).length,0),un=Object.keys(RN).reduce((a,r)=>a+avail(r).length,0);
+  show(`<h1>📖 單字小抄</h1><div>已解鎖 <b>${un}</b> / ${tot} 個單字</div><div class=w>`+Object.keys(RN).filter(r=>avail(r).length).map(r=>`<h3>${{size:'尺寸',temp:'冷熱',drink:'飲料',milk:'奶',syrup:'糖漿',ex:'加選',food:'餐點',misc:'小物',for:'用餐'}[r]}</h3>`+rows(avail(r).map(v=>W[r][v]))).join('')+'<h3>💬 常用句子</h3>'+rows(PH)+`</div><button style="margin:12px 0" onclick="${back}">返回</button>`,1);
 }
 function shop(back){
-  show(`<h1>🛒 商店</h1><div>💰 <b>${C}</b></div><div class=w>`+SHOP.map(s=>{
-    const l=S[s.k]||0,m=s.c.length,c=s.c[l];
-    return `<div class=r><span><b>${s.n}</b>${m>1?' Lv'+l+'/'+m:''}<br><small>${s.d}</small></span>${l>=m?'<span>✔ 已滿</span>':`<button class="b" onclick="buy('${s.k}','${back}')" ${C<c?'disabled':''}>💰${c}</button>`}</div>`}).join('')+`</div><button class="s" style="margin:12px 0" onclick="${back}">返回</button>`,1);
+  show(`<h1>🛒 商店</h1><div>💰 <b>${C}</b>　第 ${day} 天</div><div class=w>`+SHOP.map(s=>{
+    const l=S[s.k]||0,m=s.c.length,c=s.c[l],lock=day<s.g;
+    return `<div class=r><span><b>${s.n}</b>${m>1?' Lv'+l+'/'+m:''}<br><small>${s.d}</small></span>${l>=m?'<span>✔ 已買</span>':lock?`<span>🔒 第${s.g}天</span>`:`<button class="b" onclick="buy('${s.k}','${back}')" ${C<c?'disabled':''}>💰${c}</button>`}</div>`}).join('')+`</div><button class="s" style="margin:12px 0" onclick="${back}">返回</button>`,1);
 }
-function buy(k,back){const s=SHOP.find(x=>x.k==k),c=s.c[S[k]||0];if(C<c)return;C-=c;S[k]=(S[k]||0)+1;save();vib(30);shop(back)}
-function startDay(){T=90;served=lost=dayC=0;miss={};inDay=true;hideOv();nextCust()}
-function nextCust(){
-  if(!inDay)return;
+function buy(k,back){const s=SHOP.find(x=>x.k==k),c=s.c[S[k]||0];if(C<c||day<s.g)return;C-=c;S[k]=(S[k]||0)+1;save();vib(30);shop(back)}
+function startDay(){T=90;served=lost=dayC=0;miss={};cs=[];seats=[0,0,0];selId=0;lastSel=-1;arr=0;inDay=true;hideOv()}
+function spawn(){
+  const used=cs.filter(c=>c.st=='in'||c.st=='wait').map(c=>c.slot),free=[0,1,2].filter(i=>!used.includes(i));
+  if(!free.length)return false;
   const ts=['tour'];if(day>=2)ts.push('rush');if(day>=3)ts.push('reg');
-  const t=pick(ts),o=makeOrder(t);
-  cur={t,o,txt:say(o,t),zh:zhOf(o)};sel=fresh();bad=[];
-  patMax=pat=TY[t].p*(1+.2*(S.chairs||0))*Math.max(.65,1-day*.04);
-  draw();panel();
+  const t=pick(ts),o=makeOrder(t),pm=TY[t].p*(1+.2*(S.chairs||0))*Math.max(.65,1-day*.04);
+  cs.push({id:nid++,t,o,txt:say(o,t),zh:zhOf(o),sel:fresh(),face:pick(FACES),x:-20,y:130,ty:130,tx:SL[free[0]],slot:free[0],st:'in',pat:pm,pm,seat:-1,tm:0,by:0});
+  return true;
+}
+function fixSel(){
+  const w=cs.filter(c=>c.st=='wait');
+  if(!w.some(c=>c.id==selId))selId=w.length?w.sort((a,b)=>a.slot-b.slot)[0].id:0;
+  if(selId!=lastSel){lastSel=selId;bad=[];panel()}
+}
+function upd(dt){
+  T-=dt;tm+=dt;arr-=dt;
+  if(arr<=0&&T>8){arr=spawn()?Math.max(4,13-day*.8)*(.7+Math.random()*.6):1}
+  cs.forEach(c=>{
+    const dx=c.tx-c.x,mv=Math.abs(dx)>2;
+    if(mv)c.x+=Math.sign(dx)*Math.min(Math.abs(dx),75*dt);
+    c.y+=(c.ty-c.y)*Math.min(1,dt*6);c.by=mv?Math.sin(tm*14+c.id)*2.5:0;
+    if(!mv){if(c.st=='in')c.st='wait';else if(c.st=='toSeat'){c.st='sit';c.tm=7+Math.random()*4}}
+    if(c.st=='wait'){c.pat-=dt;if(c.pat<=0){lost++;c.st='out';c.tx=-40;c.mad=1;flash('😠 客人離開了','#f66')}}
+    if(c.st=='sit'){c.tm-=dt;if(c.tm<=0){c.st='out';c.tx=-40;c.ty=130;seats[c.seat]=0}}
+  });
+  cs=cs.filter(c=>!(c.st=='out'&&c.x<-30));
+  fixSel();
+  if(T<=0)endDay();
 }
 function serve(){
-  if(!run||!cur)return;
-  if(!sel.size||!sel.temp||!sel.drink)return flash('還沒選完喔','#fc6');
-  const b=diff(cur.o,sel);
+  const c=cs.find(c=>c.id==selId);if(!run||!c||c.st!='wait')return;
+  const s=c.sel,o=c.o;
+  if(!s.size||!s.temp||!s.drink)return flash('還沒選完喔','#fc6');
+  const b=diff(o,s);
   if(!b.length){
-    const o=cur.o;
-    let p=BASE[o.drink]+{S:0,M:10,L:20}[o.size]+o.ex.length*10+o.food.length*40;
-    p=Math.round(p*TY[cur.t].m*(1+.15*(S.beans||0))*(pat>patMax*.6?1.1:1));
-    C+=p;dayC+=p;served++;save();vib(30);flash('✔ +'+p,'#4f4');
-    cur=null;draw();panel();setTimeout(nextCust,600);
+    let p=BASE[o.drink]+{S:0,M:10,L:20}[o.size]+o.ex.length*10+(o.syrup!='none'?10:0)+o.food.length*40+o.misc.length*5;
+    p=Math.round(p*TY[c.t].m*(1+.15*(S.beans||0))*(c.pat>c.pm*.6?1.1:1));
+    C+=p;dayC+=p;served++;
+    Object.keys(RN).forEach(r=>[].concat(o[r]).forEach(v=>{const k=r+':'+v;if(P[k]>0)P[k]--}));
+    save();ls.set('c3p',P);vib(30);flash('✔ +'+p,'#4f4');
+    const seat=o.for=='here'?seats.indexOf(0):-1;
+    c.drink=o.temp=='ice'?'🧋':'☕';
+    if(seat>=0){seats[seat]=1;c.seat=seat;c.st='toSeat';c.tx=SE[seat];c.ty=112}else{c.st='out';c.tx=-40}
   }else{
-    b.forEach(r=>{[].concat(cur.o[r]).forEach(v=>miss[r+':'+v]=1)});
-    bad=b;pat-=patMax*.2;vib(100);flash('✘ 不對喔','#fa4');panel();
+    b.forEach(r=>[].concat(o[r]).forEach(v=>{const k=r+':'+v;P[k]=(P[k]||0)+1;miss[k]=1}));
+    ls.set('c3p',P);bad=b;c.pat-=c.pm*.2;vib(100);flash('✘ 不對喔','#fa4');panel();
     setTimeout(()=>{bad=[];panel()},1200);
   }
 }
 function endDay(){
-  inDay=false;cur=null;best=Math.max(best,day);const n=day;day++;save();
+  inDay=false;cs=[];best=Math.max(best,day);const n=day;day++;save();
   const ms=Object.keys(miss).map(k=>{const[r,v]=k.split(':');return `<div class=r><span>${W[r][v][0]}</span><span>${W[r][v][1]}</span></div>`}).join('');
-  lastSum=`<h1>第 ${n} 天結束</h1><div>服務 ${served} 位　離開 ${lost} 位</div><div>今日收入 💰 <b>${dayC}</b>　存款 💰 <b>${C}</b></div>${ms?'<h3>這天答錯的單字</h3><div class=w>'+ms+'</div>':''}<button onclick="startDay()">繼續 第 ${day} 天</button><button class="s" onclick="shop('sum()')">🛒 商店</button><button class="s" onclick="menu()">回選單</button>`;
-  draw();panel();sum();
+  lastSum=`<h1>第 ${n} 天結束</h1><div>服務 ${served} 位　離開 ${lost} 位</div><div>今日收入 💰 <b>${dayC}</b>　存款 💰 <b>${C}</b></div>${ms?'<h3>這天答錯的單字（之後會更常出現）</h3><div class=w>'+ms+'</div>':''}<button onclick="startDay()">繼續 第 ${day} 天</button><button class="s" onclick="shop('sum()')">🛒 商店</button><button class="s" onclick="menu()">回選單</button>`;
+  sum();
 }
 const sum=()=>show(lastSum,1);
 function panel(){
-  $('pn').innerHTML=cur?Object.keys(RN).map(r=>{
+  const c=cs.find(c=>c.id==selId);
+  $('pn').innerHTML=c?Object.keys(RN).map(r=>{
     const a=avail(r);if(!a.length)return'';
-    return `<div class="row${bad.includes(r)?' bad':''}">`+a.map(v=>`<button class="o${(Array.isArray(sel[r])?sel[r].includes(v):sel[r]==v)?' on':''}" data-r="${r}" data-v="${v}">${W[r][v][0]}<small>${W[r][v][1]}</small></button>`).join('')+'</div>';
+    return `<div class="row${bad.includes(r)?' bad':''}">`+a.map(v=>`<button class="o${(Array.isArray(c.sel[r])?c.sel[r].includes(v):c.sel[r]==v)?' on':''}" data-r="${r}" data-v="${v}">${W[r][v][0]}<small>${W[r][v][1]}</small></button>`).join('')+'</div>';
   }).join(''):'';
 }
-function draw(){
+function hud(){
   $('d').textContent='第 '+day+' 天';$('t').textContent='⏱ '+Math.max(0,Math.ceil(T));$('c').textContent='💰 '+C;
-  if(!cur){$('face').textContent='🚶';$('fill').style.width='0';$('ty').textContent='';$('bub').textContent='';$('hint').textContent='';return}
-  const q=Math.max(0,pat/patMax);
-  $('face').textContent=q>.6?'😀':q>.3?'😐':'😠';
-  $('fill').style.width=q*100+'%';$('fill').style.background=q>.6?'#4ade80':q>.3?'#facc15':'#f87171';
-  $('ty').textContent=TY[cur.t].e+' '+TY[cur.t].n;
-  $('bub').textContent='“'+cur.txt+'”';
-  $('hint').textContent=hint?'💡 '+cur.zh:'';
+  const c=cs.find(c=>c.id==selId);
+  $('ty').textContent=c?TY[c.t].e+' '+TY[c.t].n+'（點場景裡的客人可切換）':'';
+  $('bub').textContent=c?'“'+c.txt+'”':(inDay?'等待客人上門…':'');
+  $('hint').textContent=c&&hint?'💡 '+c.zh:'';
 }
+function drawC(c){
+  const y=c.y+c.by;g.font='30px serif';g.fillStyle='#fff';g.fillText(c.face,c.x,y);
+  if(c.drink){g.font='16px serif';g.fillText(c.drink,c.x+16,y+8)}
+  if(c.mad){g.font='16px serif';g.fillText('😠',c.x,y-24)}
+  if(c.st=='wait'){
+    const q=Math.max(0,c.pat/c.pm);
+    g.fillStyle='#000a';g.fillRect(c.x-14,y-26,28,5);
+    g.fillStyle=q>.6?'#4ade80':q>.3?'#facc15':'#f87171';g.fillRect(c.x-14,y-26,28*q,5);
+    g.font='12px serif';g.fillStyle='#fff';g.fillText(TY[c.t].e,c.x+18,y-22);
+    g.font='14px serif';if(c.id==selId){g.fillStyle='#ffd23d';g.fillText('▼',c.x,y-35)}else g.fillText('💬',c.x,y-35);
+  }
+}
+function scene(){
+  g.textAlign='center';g.textBaseline='middle';
+  g.fillStyle='#2b2440';g.fillRect(0,0,360,150);
+  g.fillStyle='#3d2f2a';g.fillRect(0,96,360,54);g.fillStyle='#4a3a33';g.fillRect(0,96,360,4);
+  g.fillStyle='#7a4b2a';g.fillRect(0,36,22,64);g.fillStyle='#ffd23d';g.fillRect(16,68,3,3);
+  g.fillStyle='#4aa3d844';g.fillRect(245,22,95,44);g.strokeStyle='#fff3';g.strokeRect(245,22,95,44);
+  g.font='bold 13px sans-serif';g.fillStyle='#ffd23d';g.fillText('☕ OPEN',160,14);
+  g.font='30px serif';g.fillText('🧑‍🍳',160,80+Math.sin(tm*2)*1.5);g.font='20px serif';g.fillText('☕',125,76);g.fillText('🪴',348,84);g.fillText('🖼️',60,50);
+  g.fillStyle='#8b5a2b';g.fillRect(95,92,135,24);g.fillStyle='#b07a43';g.fillRect(95,92,135,5);
+  cs.slice().sort((a,b)=>a.y-b.y).forEach(drawC);
+  g.fillStyle='#6b4423';SE.forEach(sx=>g.fillRect(sx-16,121,32,5));
+}
+let last=0;
+function loop(t){
+  requestAnimationFrame(loop);
+  const el=t-last;if(el<33)return;last=t;
+  if(run)upd(Math.min(el/1000,.1));
+  scene();hud();
+}
+$('cv').onpointerdown=e=>{
+  if(!run)return;const r=$('cv').getBoundingClientRect(),x=(e.clientX-r.left)/r.width*360;
+  const w=cs.filter(c=>c.st=='wait').sort((a,b)=>Math.abs(a.x-x)-Math.abs(b.x-x))[0];
+  if(w&&Math.abs(w.x-x)<28)selId=w.id;
+};
 $('pn').onclick=e=>{
-  const b=e.target.closest('.o');if(!b||!run||!cur)return;
-  const r=b.dataset.r,v=b.dataset.v;
-  if(Array.isArray(sel[r])){const i=sel[r].indexOf(v);i<0?sel[r].push(v):sel[r].splice(i,1)}else sel[r]=v;
+  const b=e.target.closest('.o'),c=cs.find(c=>c.id==selId);if(!b||!run||!c)return;
+  const r=b.dataset.r,v=b.dataset.v,s=c.sel;
+  if(Array.isArray(s[r])){const i=s[r].indexOf(v);i<0?s[r].push(v):s[r].splice(i,1)}else s[r]=v;
   vib(8);panel();
 };
 $('sv').onclick=serve;
-$('hb').onclick=()=>{hint=!hint;ls.set('c2h',hint);flash(hint?'💡 中文提示：開':'💡 中文提示：關','#ffd23d');draw()};
+$('hb').onclick=()=>{hint=!hint;ls.set('c3h',hint);flash(hint?'💡 中文提示：開':'💡 中文提示：關','#ffd23d')};
 $('sb').onclick=()=>sheet('hideOv()');
-setInterval(()=>{
-  if(!run)return;
-  T-=.1;
-  if(cur){pat-=.1;if(pat<=0){lost++;cur=null;flash('😠 客人離開了','#f66');draw();panel();setTimeout(nextCust,700)}}
-  if(T<=0)return endDay();
-  draw();
-},100);
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&run)show('<h1>⏸ 暫停</h1><button onclick="hideOv()">繼續</button>')});
-menu();
+setInterval(()=>{if(lastSel!=selId&&run)fixSel()},200);
+menu();requestAnimationFrame(loop);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script></body></html>
