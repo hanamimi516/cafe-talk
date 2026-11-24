@@ -32,7 +32,7 @@ button{border:0;border-radius:999px;background:linear-gradient(#8da77b,#718d60);
 button.s{background:linear-gradient(#bd9c70,#a98255);box-shadow:0 3px 0 #896744}
 button:active{transform:translateY(2px);box-shadow:0 1px 0 #536f47}
 button:disabled{opacity:.45}
-#sv{display:block;width:calc(100% - 28px);margin:10px 14px 0;background:linear-gradient(#d58b61,#bd704b);box-shadow:0 4px 0 #97563b;font-size:19px;letter-spacing:.02em}
+#sv{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:4;display:block;width:calc(100% - 28px);margin:10px 14px 0;background:linear-gradient(#d58b61,#bd704b);box-shadow:0 4px 0 #97563b,0 8px 18px #61472b40;font-size:19px;letter-spacing:.02em}
 .b{font-size:14px;padding:6px 14px}
 .ov{position:absolute;inset:0;background:#f7f0e5f7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;z-index:5;min-height:100%;backdrop-filter:blur(4px)}
 .ov.top{justify-content:flex-start}
@@ -44,6 +44,12 @@ h3{margin:12px 0 4px;color:#9a7651;text-align:left;width:100%}
 small{color:#9c8873}
 #fl{position:fixed;left:0;right:0;top:35%;text-align:center;font-size:28px;font-weight:900;pointer-events:none;-webkit-text-stroke:5px #fffdf7;paint-order:stroke fill;z-index:9}
 @media(min-width:500px){#app{min-height:100vh}}
+@keyframes nod{0%,60%,100%{transform:rotate(0)}66%{transform:rotate(7deg)}72%{transform:rotate(-1deg)}78%{transform:rotate(6deg)}86%{transform:rotate(0)}}
+@keyframes wipe{0%,100%{transform:translate(0,0)}25%{transform:translate(-2.4px,-1px)}50%{transform:translate(2.4px,0)}75%{transform:translate(-2.4px,-1px)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.bh{transform-box:fill-box;transform-origin:50% 100%;animation:nod 6s ease-in-out infinite}
+.bw{animation:wipe 1.2s ease-in-out infinite}
+.be{transform-box:fill-box;transform-origin:50% 50%;animation:blink 4s infinite}
 </style></head>
 <body><div id="app">
 <div id="top"><span id="d"></span><span id="t"></span><span id="c"></span><span><button class="s" id="hb">💡</button> <button class="s" id="sb">📖</button></span></div>
@@ -72,8 +78,8 @@ small{color:#9c8873}
 <g transform="translate(22 41)"><path d="M0 8L64 0V39L0 51Z" fill="#8d6043"/><path d="M5 10L59 3V34L5 44Z" fill="url(#glass)" stroke="#f8e8ce" stroke-width="3"/><path d="M31 6V39M5 27L59 20" stroke="#fff4dc" stroke-width="3"/><path d="M8 12L26 9L17 23Z" fill="#fff" opacity=".3"/></g>
 <!-- right window / menu board -->
 <g transform="translate(270 38)"><path d="M0 5L59 13V49L0 38Z" fill="#714d38"/><path d="M5 9L54 16V43L5 34Z" fill="#efe2c8"/><path d="M11 16L46 21M11 23L39 27M11 30L43 35" stroke="#9b7654" stroke-width="2" stroke-linecap="round"/><circle cx="47" cy="14" r="3" fill="#b9774e"/></g>
-<!-- wall shelf -->
-<g><path d="M91 44L155 35L155 59L91 68Z" fill="#8d5e3e"/><path d="M94 43L155 35L155 42L94 51Z" fill="#d6a16a"/><g fill="#f4e7ce" stroke="#a77750" stroke-width="1"><path d="M101 48L109 47V62L101 63Z"/><path d="M112 46L121 45V59L112 60Z"/><path d="M125 44L134 43V58L125 59Z"/></g><path d="M97 68L157 59" stroke="#714c34" stroke-width="3"/></g>
+<!-- back-bar pastry display behind the barista -->
+<g transform="translate(94 34) skewY(-8)"><rect width="66" height="33" rx="3" fill="#8d5e3e" stroke="#6a432c" stroke-width="1.4"/><rect x="2.5" y="2.5" width="61" height="28" rx="1.5" fill="#f3e6cc"/><rect x="2.5" y="13.8" width="61" height="2.4" fill="#c89a67"/><rect x="2.5" y="25.8" width="61" height="2.4" fill="#c89a67"/><path d="M5 5L14 4M19 6L24 5" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".6"/><g font-size="9" text-anchor="middle"><text id="sh_cro" x="9" y="12.6" style="display:none">🥐</text><text id="sh_chz" x="19.5" y="12.6" style="display:none">🍰</text><text id="sh_muf" x="30" y="12.6" style="display:none">🧁</text><text id="sh_bag" x="40.5" y="12.6" style="display:none">🥯</text><text id="sh_sco" x="51" y="12.6" style="display:none">🍞</text><text id="sh_don" x="61" y="12.6" style="display:none">🍩</text><text id="sh_cook" x="9" y="24.6" style="display:none">🍪</text><text id="sh_sand" x="19.5" y="24.6" style="display:none">🥪</text><text id="sh_wafl" x="30" y="24.6" style="display:none">🧇</text><text id="sh_brow" x="40.5" y="24.6" style="display:none">🍫</text><text id="sh_tira" x="51" y="24.6" style="display:none">🍮</text><text id="sh_panc" x="61" y="24.6" style="display:none">🥞</text></g></g>
 <!-- counter shadow -->
 <path d="M18 117L91 83L160 111L85 149Z" fill="#67442f" opacity=".22" filter="url(#shadow)"/>
 <!-- main counter front -->
@@ -95,34 +101,18 @@ small{color:#9c8873}
   <path d="M-13 -14Q-12 -23 -5 -24H5Q12 -23 13 -14L11 4H-11Z" fill="#f8f1e5" stroke="#88664e" stroke-width="1.2"/>
   <path d="M-9 -12L-5 -20H5L9 -12L6 3H-6Z" fill="#78906d" stroke="#58704f" stroke-width="1"/>
   <path d="M-5 -18L0 -11L5 -18" fill="none" stroke="#e8d8bd" stroke-width="1.4"/>
-  <path d="M-10 -11L-15 -4M10 -11L15 -4" stroke="#e9b991" stroke-width="4" stroke-linecap="round"/>
-  <!-- neck and head -->
+  <g class="bw"><path d="M-10 -11L-6 -3M10 -11L6 -3" stroke="#e9b991" stroke-width="4" stroke-linecap="round"/><path d="M-4.5 -9H4.5L3.4 -1H-3.4Z" fill="#fbf3e4" stroke="#9a6a49" stroke-width=".9"/><path d="M-4 -6.5H4" stroke="#b8734c" stroke-width="1.2"/><path d="M-7 -4Q0 0 7 -4" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></g>
+  <!-- neck and head --><g class="bh">
   <rect x="-3" y="-29" width="6" height="7" rx="2" fill="#e8b991"/>
   <ellipse cx="0" cy="-35" rx="9" ry="10" fill="#efc39e" stroke="#9a6b4e" stroke-width="1"/>
   <path d="M-9 -35Q-10 -47 0 -47Q11 -47 9 -34L6 -38L2 -41L-2 -37L-6 -40Z" fill="#584437" stroke="#45352b" stroke-width="1"/>
   <path d="M-7 -32Q-10 -27 -7 -25" fill="none" stroke="#584437" stroke-width="3" stroke-linecap="round"/>
-  <circle cx="-3" cy="-34" r=".9" fill="#49372d"/><circle cx="3" cy="-34" r=".9" fill="#49372d"/>
+  <g class="be"><circle cx="-3" cy="-34" r=".9" fill="#49372d"/><circle cx="3" cy="-34" r=".9" fill="#49372d"/></g>
   <path d="M-2 -30Q0 -28 2 -30" fill="none" stroke="#b66e5f" stroke-width=".9" stroke-linecap="round"/>
+</g>
   <circle cx="0" cy="-15" r="1.5" fill="#e4c89e"/>
 </g>
-<!-- bakery cabinet -->
-<g>
-<path d="M220 63L269 88V112L220 86Z" fill="#8a5a3c" stroke="#6a432c" stroke-width="1.5"/>
-<path d="M269 88L342 70V94L269 112Z" fill="#b9825a" stroke="#6a432c" stroke-width="1.5"/>
-<path d="M220 86L269 112V116L220 90ZM269 112L342 94V98L269 116Z" fill="#5d3b28"/>
-<path d="M225 69L243 78V99L225 90ZM247 80L264 89V109L247 100Z" fill="#a46e49" stroke="#6a432c" stroke-width="1"/>
-<path d="M229 73L239 78V94L229 89ZM251 84L260 89V104L251 99Z" fill="#b57d55"/>
-<circle cx="241" cy="86" r="1.3" fill="#f3dcae"/><circle cx="262" cy="96" r="1.3" fill="#f3dcae"/>
-<path d="M276 91L304 84V103L276 110ZM309 83L337 76V94L309 101Z" fill="url(#glass)" stroke="#5b3d2a" stroke-width="1.3"/>
-<path d="M276 100L304 93M309 92L337 85" stroke="#f1e2c4" stroke-width="1.6"/>
-<path d="M281 98L292 95V99L281 102ZM314 91L327 88V92L314 95Z" fill="#e0a566"/><path d="M283 106L296 103V106L283 109ZM316 99L330 96V99L316 102Z" fill="#c98250"/>
-<path d="M220 63L292 48L342 70L269 88Z" fill="#ecd6af" stroke="#6a432c" stroke-width="1.5"/>
-<path d="M232 63L290 51L330 69L271 83Z" fill="#f8ecd3"/>
-<g transform="translate(250 66)"><ellipse cx="0" cy="3" rx="11" ry="4.5" fill="#d8b98c" stroke="#8a6445"/><path d="M-9 2Q-9 -9 0 -9Q9 -9 9 2Q0 6 -9 2Z" fill="#e9f3ee" opacity=".75" stroke="#86a395"/><path d="M-5 0L1 -3L5 0L-1 3Z" fill="#d89a5b"/><circle cx="0" cy="-9.5" r="1.3" fill="#86a395"/></g>
-<g transform="translate(283 59)"><path d="M-5 -2H5L4 8H-4Z" fill="#cfe0d3" stroke="#6f8e7a"/><rect x="-5.4" y="-5" width="10.8" height="3.2" rx="1" fill="#8a5a3c"/><path d="M-2 2H2" stroke="#fff" stroke-width="1.2"/></g>
-<g transform="translate(300 63)"><path d="M-5 -2H5L4 8H-4Z" fill="#f0dfc0" stroke="#a98562"/><rect x="-5.4" y="-5" width="10.8" height="3.2" rx="1" fill="#6f8c65"/></g>
-<g transform="translate(318 66)"><path d="M-6 6Q-7 -2 0 -3Q7 -2 6 6Z" fill="#c9835a" stroke="#8a5a3c"/><path d="M0 -3Q-6 -12 -10 -10Q-8 -3 0 -3ZM0 -3Q6 -14 11 -11Q9 -3 0 -3ZM0 -3Q0 -14 3 -17Q6 -10 0 -3" fill="#76906b" stroke="#526c4c" stroke-width="1"/></g>
-</g>
+<g transform="translate(236 66)"><circle r="8" fill="#fffaf0" stroke="#8d5e3e" stroke-width="2"/><path d="M0 0V-5M0 0L4 2" stroke="#594438" stroke-width="1.3" stroke-linecap="round"/><circle r="1" fill="#594438"/></g>
 <!-- hanging warm lamps -->
 <g><path d="M188 8V28M252 17V39" stroke="#8b6749" stroke-width="1.5"/><path d="M179 29Q188 18 197 29L193 34H183Z" fill="#c58b55"/><path d="M244 40Q252 29 260 40L256 45H248Z" fill="#c58b55"/><ellipse cx="188" cy="35" rx="13" ry="5" fill="#ffe7a8" opacity=".28"/><ellipse cx="252" cy="46" rx="12" ry="5" fill="#ffe7a8" opacity=".25"/></g>
 <!-- plant pots -->
@@ -136,7 +126,7 @@ small{color:#9c8873}
 <!-- chalk sign -->
 <g transform="translate(34 166)"><ellipse cx="0" cy="17" rx="19" ry="4" fill="#705038" opacity=".18"/><path d="M-12 12L-16 20M12 12L16 20" stroke="#6f5a45" stroke-width="2.6" stroke-linecap="round"/><path d="M-14 -22Q-14 -25 -11 -25H11Q14 -25 14 -22L18 12H-18Z" fill="#7a5c44" stroke="#5a412e" stroke-width="1.2"/><path d="M-11 -20H11L14.5 9H-14.5Z" fill="#40574c"/><path d="M-6 -15H6M-8 -8H8M-9 -1H5" stroke="#f5e9ca" stroke-width="1.3" stroke-linecap="round" stroke-dasharray="5 2"/><path d="M-3 4Q-3 8 0 8Q3 8 3 4Z" fill="none" stroke="#f5e9ca" stroke-width="1"/></g>
 <!-- decorative coffee sign -->
-<g transform="translate(166 36)"><path d="M-35 2Q-35 -5 -27 -5H27Q35 -5 35 2V20Q35 27 27 27H-27Q-35 27 -35 20Z" fill="#704a34" stroke="#f0d9b4" stroke-width="2"/><text x="0" y="10" text-anchor="middle" font-size="9" font-weight="bold" fill="#f8e9c9" letter-spacing="1">CAFÉ</text><text x="0" y="20" text-anchor="middle" font-size="7" fill="#d9b78c">TALK &amp; COFFEE</text></g>
+<g transform="translate(216 35) scale(.78)"><path d="M-35 2Q-35 -5 -27 -5H27Q35 -5 35 2V20Q35 27 27 27H-27Q-35 27 -35 20Z" fill="#704a34" stroke="#f0d9b4" stroke-width="2"/><text x="0" y="10" text-anchor="middle" font-size="9" font-weight="bold" fill="#f8e9c9" letter-spacing="1">CAFÉ</text><text x="0" y="20" text-anchor="middle" font-size="7" fill="#d9b78c">TALK &amp; COFFEE</text></g>
 <!-- front floor trim -->
 <path d="M8 152L180 232L352 152" fill="none" stroke="#8a6245" stroke-width="3" opacity=".7"/>
 <path d="M8 159L180 239L352 159" fill="none" stroke="#f0d9b7" stroke-width="2" opacity=".7"/>
@@ -153,19 +143,19 @@ small{color:#9c8873}
 const W={
 size:{S:['Small','小杯'],M:['Medium','中杯'],L:['Large','大杯']},
 temp:{hot:['Hot','熱'],ice:['Iced','冰']},
-drink:{ame:['Americano','美式'],lat:['Latte','拿鐵'],cap:['Cappuccino','卡布奇諾'],fla:['Flat white','馥列白'],esp:['Espresso','濃縮咖啡'],mac:['Macchiato','瑪奇朵'],moc:['Mocha','摩卡'],mat:['Matcha latte','抹茶拿鐵'],hc:['Hot chocolate','熱巧克力'],chai:['Chai latte','印度奶茶'],cb:['Cold brew','冷萃咖啡'],tea:['Black tea','紅茶'],lem:['Lemonade','檸檬汁'],oj:['Orange juice','柳橙汁'],sw:['Sparkling water','氣泡水']},
+drink:{ame:['Americano','美式'],lat:['Latte','拿鐵'],cap:['Cappuccino','卡布奇諾'],fla:['Flat white','馥列白'],esp:['Espresso','濃縮咖啡'],mac:['Macchiato','瑪奇朵'],moc:['Mocha','摩卡'],mat:['Matcha latte','抹茶拿鐵'],hc:['Hot chocolate','熱巧克力'],chai:['Chai latte','印度奶茶'],cb:['Cold brew','冷萃咖啡'],tea:['Black tea','紅茶'],lem:['Lemonade','檸檬汁'],oj:['Orange juice','柳橙汁'],sw:['Sparkling water','氣泡水'],cor:['Cortado','可塔朵'],fra:['Frappe','冰沙咖啡'],smo:['Smoothie','果昔'],shk:['Milkshake','奶昔']},
 milk:{none:['No milk','不加奶'],whole:['Whole milk','全脂牛奶'],oat:['Oat milk','燕麥奶'],alm:['Almond milk','杏仁奶'],soy:['Soy milk','豆奶'],skim:['Skim milk','脫脂牛奶']},
-syrup:{none:['No syrup','不加糖漿'],van:['Vanilla syrup','香草糖漿'],car:['Caramel syrup','焦糖糖漿'],haz:['Hazelnut syrup','榛果糖漿']},
+syrup:{none:['No syrup','不加糖漿'],van:['Vanilla syrup','香草糖漿'],car:['Caramel syrup','焦糖糖漿'],haz:['Hazelnut syrup','榛果糖漿'],mpl:['Maple syrup','楓糖糖漿'],bsg:['Brown sugar syrup','黑糖糖漿'],lav:['Lavender syrup','薰衣草糖漿']},
 ex:{shot:['Extra shot','多一份濃縮'],ice:['Less ice','少冰'],sug:['No sugar','無糖'],whip:['Whipped cream','鮮奶油'],cin:['Cinnamon','肉桂粉'],hon:['Honey','蜂蜜']},
-food:{cro:['Croissant','可頌'],chz:['Cheesecake','起司蛋糕'],muf:['Muffin','馬芬'],bag:['Bagel','貝果'],cook:['Cookie','餅乾'],sand:['Sandwich','三明治'],wafl:['Waffle','格子鬆餅'],brow:['Brownie','布朗尼'],sco:['Scone','司康'],don:['Donut','甜甜圈'],tira:['Tiramisu','提拉米蘇'],panc:['Pancake','美式煎餅']},
-misc:{str:['Straw','吸管'],nap:['Napkin','餐巾紙'],rec:['Receipt','收據']},
+food:{cro:['Croissant','可頌'],chz:['Cheesecake','起司蛋糕'],muf:['Muffin','馬芬'],bag:['Bagel','貝果'],cook:['Cookie','餅乾'],sand:['Sandwich','三明治'],wafl:['Waffle','格子鬆餅'],brow:['Brownie','布朗尼'],sco:['Scone','司康'],don:['Donut','甜甜圈'],tira:['Tiramisu','提拉米蘇'],panc:['Pancake','美式煎餅'],tst:['Toast','吐司'],qui:['Quiche','鹹派'],sal:['Salad','沙拉'],sou:['Soup','湯'],pie:['Pie','派']},
+misc:{str:['Straw','吸管'],nap:['Napkin','餐巾紙'],rec:['Receipt','收據'],lid:['Lid','杯蓋'],slv:['Sleeve','隔熱杯套'],stir:['Stirrer','攪拌棒']},
 for:{here:['For here','內用'],go:['To go','外帶']}};
 const RN={size:1,temp:1,drink:1,milk:1,syrup:1,ex:1,food:1,misc:1,for:1};
-const BASE={ame:50,lat:65,cap:70,fla:75,esp:45,mac:65,moc:80,mat:85,hc:70,chai:80,cb:75,tea:45,lem:55,oj:60,sw:40};
-const FP={cro:'a croissant',chz:'a slice of cheesecake',muf:'a muffin',bag:'a bagel',cook:'a cookie',sand:'a sandwich',wafl:'a waffle',brow:'a brownie',sco:'a scone',don:'a donut',tira:'a slice of tiramisu',panc:'a pancake'};
-const MP={str:'a straw',nap:'a napkin',rec:'a receipt'},EP={shot:'an extra shot',ice:'less ice',sug:'no sugar',whip:'whipped cream',cin:'cinnamon on top',hon:'honey'};
+const BASE={ame:50,lat:65,cap:70,fla:75,esp:45,mac:65,moc:80,mat:85,hc:70,chai:80,cb:75,tea:45,lem:55,oj:60,sw:40,cor:60,fra:75,smo:70,shk:75};
+const FP={cro:'a croissant',chz:'a slice of cheesecake',muf:'a muffin',bag:'a bagel',cook:'a cookie',sand:'a sandwich',wafl:'a waffle',brow:'a brownie',sco:'a scone',don:'a donut',tira:'a slice of tiramisu',panc:'a pancake',tst:'a slice of toast',qui:'a slice of quiche',sal:'a salad',sou:'a bowl of soup',pie:'a slice of pie'};
+const MP={str:'a straw',nap:'a napkin',rec:'a receipt',lid:'a lid',slv:'a sleeve',stir:'a stirrer'},EP={shot:'an extra shot',ice:'less ice',sug:'no sugar',whip:'whipped cream',cin:'cinnamon on top',hon:'honey'};
 const TY={tour:{n:'Tourist 觀光客',e:'🧳',p:45,m:1},rush:{n:'Rushed 趕時間',e:'🏃',p:28,m:1.15},reg:{n:'Regular 熟客',e:'⭐',p:38,m:1.25}};
-const NM=['ame','esp','mac','cb','tea','lem','oj','sw'],NC=['tea','lem','oj','sw'],IMP=['hc','cb','lem','oj','sw'];
+const NM=['ame','esp','mac','cb','tea','lem','oj','sw','cor','fra','smo','shk'],NC=['tea','lem','oj','sw','smo','shk'],IMP=['hc','cb','lem','oj','sw','fra','smo','shk'];
 const FACES=['🧑','👩','👨','🧔','👵','👴','👧','👱'];
 const SHOP=[
 {k:'beans',n:'Better beans 好咖啡豆',d:'所有收入 +15%',c:[100,250,500],g:1},
@@ -180,41 +170,50 @@ const SHOP=[
 {k:'misc',n:'Service pack 服務包',d:'Straw / Napkin / Receipt',c:[200],g:4},
 {k:'dC',n:'Tea & cold pack 茶與冷飲包',d:'Black tea / Lemonade / Orange juice / Sparkling water',c:[300],g:5},
 {k:'pasB',n:'Pastry pack B 甜點包 B',d:'Cookie / Sandwich / Waffle / Brownie',c:[300],g:5},
-{k:'pasC',n:'Pastry pack C 甜點包 C',d:'Scone / Donut / Tiramisu / Pancake',c:[350],g:6}];
-const PH=[['Takeaway / To take away','＝ To go 外帶'],['Eat in / Dine in','＝ For here 內用'],['What can I get for you?','請問要點什麼？'],['For here or to go?','內用還是外帶？'],['Would you like anything else?','還需要其他的嗎？'],['What size would you like?','你要什麼尺寸？'],['Do you have oat milk?','你們有燕麥奶嗎？'],['No sugar, please.','請不要加糖。'],['Can I get a receipt, please?','可以給我收據嗎？'],['Can I pay by card?','可以刷卡嗎？'],['Is this seat taken?','這個位子有人坐嗎？'],['Could I get some water?','可以給我一些水嗎？']];
+{k:'pasC',n:'Pastry pack C 甜點包 C',d:'Scone / Donut / Tiramisu / Pancake',c:[350],g:6},
+{k:'tbl',n:'Extra tables 加桌椅',d:'每級多一組客人座位（最多 +2）',c:[250,450],g:2},
+{k:'dD',n:'Drinks pack C 飲料包 C',d:'Cortado / Frappe / Smoothie / Milkshake',c:[350],g:7,req:'dA'},
+{k:'syr2',n:'Syrup pack B 糖漿包 B',d:'Maple / Brown sugar / Lavender syrup',c:[300],g:8,req:'syr'},
+{k:'pasD',n:'Savory pack 鹹食包',d:'Toast / Quiche / Salad / Soup / Pie',c:[400],g:9,req:'pasA'},
+{k:'misc2',n:'Service pack B 服務包 B',d:'Lid / Sleeve / Stirrer',c:[250],g:10,req:'misc'}];
+const PH=[['Regular','＝ Medium 中杯（常見說法）'],['Tall / Grande / Venti','＝ 小／中／大杯（連鎖店用語）'],['Takeaway / To take away','＝ To go 外帶'],['Eat in / Dine in','＝ For here 內用'],['What can I get for you?','請問要點什麼？'],['For here or to go?','內用還是外帶？'],['Would you like anything else?','還需要其他的嗎？'],['What size would you like?','你要什麼尺寸？'],['Do you have oat milk?','你們有燕麥奶嗎？'],['No sugar, please.','請不要加糖。'],['Can I get a receipt, please?','可以給我收據嗎？'],['Can I pay by card?','可以刷卡嗎？'],['Is this seat taken?','這個位子有人坐嗎？'],['Could I get some water?','可以給我一些水嗎？']];
 const $=id=>document.getElementById(id),ov=$('ov');let g=$('cv').getContext('2d');g.scale(2,2);
 const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const vib=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
 const D=ls.get('c3',{});
-let C=D.C||0,S=D.S||{},day=D.day||1,best=D.best||0,hint=ls.get('c3h',true),P=ls.get('c3p',{});
-let T=90,cs=[],seats=[0,0,0],selId=0,lastSel=-1,nid=1,arr=0,tm=0,served=0,lost=0,dayC=0,miss={},bad=[],run=false,inDay=false,lastSum='';
-const QUEUE=[{x:151,y:137},{x:173,y:151},{x:195,y:165}];
-const SEAT_POS=[{x:240,y:136},{x:306,y:136},{x:92,y:180}];
+let C=D.C||0,S=D.S||{},day=D.day||1,best=D.best||0,hint=ls.get('c3h2',false),P=ls.get('c3p',{});
+let T=90,cs=[],seats=[0,0,0,0,0],selId=0,lastSel=-1,nid=1,arr=0,tm=0,served=0,lost=0,dayC=0,penD=0,miss={},bad=[],run=false,inDay=false,lastSum='';
+const QUEUE=[{x:151,y:137},{x:173,y:151},{x:195,y:165},{x:217,y:179},{x:239,y:193}];
+const SEAT_POS=[{x:240,y:136},{x:306,y:136},{x:92,y:180},{x:212,y:108},{x:276,y:110}];
 const ROUTES=[
  [{x:212,y:150},{x:214,y:130},{x:230,y:129},{x:240,y:136}],
  [{x:212,y:150},{x:214,y:120},{x:292,y:119},{x:306,y:136}],
- [{x:182,y:188},{x:134,y:184},{x:108,y:170},{x:92,y:180}]];
+ [{x:182,y:188},{x:134,y:184},{x:108,y:170},{x:92,y:180}],
+ [{x:206,y:150},{x:186,y:128},{x:182,y:106},{x:198,y:99},{x:212,y:106}],
+ [{x:206,y:150},{x:186,y:128},{x:182,y:106},{x:200,y:96},{x:264,y:95},{x:276,y:108}]];
 const ENTRY={x:180,y:230};
+const SHELF={cro:'pasA',chz:'pasA',muf:'pasA',bag:'pasA',cook:'pasB',sand:'pasB',wafl:'pasB',brow:'pasB',sco:'pasC',don:'pasC',tira:'pasC',panc:'pasC'};
+function syncShelf(){for(const k in SHELF){const e=document.getElementById('sh_'+k);if(e)e.style.display=S[SHELF[k]]?'':'none'}}
 const save=()=>ls.set('c3',{C,S,day,best});
 const fresh=()=>({size:null,temp:null,drink:null,milk:'none',syrup:'none',ex:[],food:[],misc:[],for:'here'});
 const U=(k,a)=>S[k]?a:[];
 function avail(r){switch(r){
-case'drink':return['ame','lat',...U('dA',['cap','fla','esp','mac']),...U('dB',['moc','mat','hc','chai','cb']),...U('dC',['tea','lem','oj','sw'])];
+case'drink':return['ame','lat',...U('dA',['cap','fla','esp','mac']),...U('dB',['moc','mat','hc','chai','cb']),...U('dC',['tea','lem','oj','sw']),...U('dD',['cor','fra','smo','shk'])];
 case'milk':return['none','whole',...U('milk',['oat','alm','soy','skim'])];
-case'syrup':return S.syr?['none','van','car','haz']:[];
+case'syrup':return S.syr?['none','van','car','haz',...U('syr2',['mpl','bsg','lav'])]:[];
 case'ex':return[...U('ext',['shot','ice','sug','whip']),...U('top',['cin','hon'])];
-case'food':return[...U('pasA',['cro','chz','muf','bag']),...U('pasB',['cook','sand','wafl','brow']),...U('pasC',['sco','don','tira','panc'])];
-case'misc':return U('misc',['str','nap','rec']);
+case'food':return[...U('pasA',['cro','chz','muf','bag']),...U('pasB',['cook','sand','wafl','brow']),...U('pasC',['sco','don','tira','panc']),...U('pasD',['tst','qui','sal','sou','pie'])];
+case'misc':return[...U('misc',['str','nap','rec']),...U('misc2',['lid','slv','stir'])];
 default:return Object.keys(W[r])}}
 function pickW(r,a){const w=a.map(v=>1+Math.min(3,P[r+':'+v]||0));let x=Math.random()*w.reduce((p,q)=>p+q,0);for(let i=0;i<a.length;i++)if((x-=w[i])<=0)return a[i];return a[0]}
 function makeOrder(t){
   const dr=pickW('drink',avail('drink'));
-  const temp=['hc','esp','mac'].includes(dr)?'hot':['cb','lem','oj','sw'].includes(dr)?'ice':pick(['hot','ice']);
+  const temp=['hc','esp','mac','cor'].includes(dr)?'hot':['cb','lem','oj','sw','fra','smo','shk'].includes(dr)?'ice':pick(['hot','ice']);
   const o={size:pickW('size',['S','M','L']),temp,drink:dr,milk:NM.includes(dr)?'none':pickW('milk',avail('milk').filter(x=>x!='none')),syrup:'none',ex:[],food:[],misc:[],for:pick(['here','go'])};
   const sy=avail('syrup');if(t!='tour'&&sy.length&&!NC.includes(dr)&&Math.random()<.35)o.syrup=pickW('syrup',sy.filter(x=>x!='none'));
   if(t!='tour'){
-    const c=avail('ex').filter(e=>(e!='shot'||['ame','lat','cap','fla','mac','moc','cb'].includes(dr))&&(e!='ice'||temp=='ice')&&(e!='whip'||['moc','hc'].includes(dr))&&(e!='cin'||['lat','cap','chai','moc'].includes(dr))&&(e!='hon'||['tea','lat','chai','mat','hc'].includes(dr)));
+    const c=avail('ex').filter(e=>(e!='shot'||['ame','lat','cap','fla','mac','moc','cb'].includes(dr))&&(e!='ice'||temp=='ice')&&(e!='whip'||['moc','hc','fra','shk'].includes(dr))&&(e!='cin'||['lat','cap','chai','moc'].includes(dr))&&(e!='hon'||['tea','lat','chai','mat','hc'].includes(dr)));
     if(c.length&&Math.random()<.5){o.ex=[pickW('ex',c)];if(t=='reg'&&c.length>1&&Math.random()<.3)o.ex.push(pickW('ex',c.filter(x=>x!=o.ex[0])))}
   }
   const f=avail('food');
@@ -222,6 +221,7 @@ function makeOrder(t){
   const m=avail('misc');if(t=='reg'&&m.length&&Math.random()<.4)o.misc=[pickW('misc',m)];
   return o;
 }
+function sizeWord(o){const w=W.size[o.size][0].toLowerCase();if(day>=5&&Math.random()<.4)return{S:'tall',M:'grande',L:'venti'}[o.size];if(day>=3&&o.size==='M'&&Math.random()<.4)return'regular';return w}
 const J=a=>a.length>1?a.slice(0,-1).join(', ')+' and '+a[a.length-1]:a[0];
 function say(o,t){
   const lc=(k,v)=>W[k][v][0].toLowerCase(),L=[];
@@ -229,7 +229,7 @@ function say(o,t){
   if(o.syrup!='none')L.push(lc('syrup',o.syrup));
   o.ex.forEach(e=>L.push(EP[e]));
   const imp=IMP.includes(o.drink);
-  const core=`${lc('size',o.size)} ${imp?'':lc('temp',o.temp)+' '}${lc('drink',o.drink)}`+(L.length?' with '+J(L):'');
+  const core=`${sizeWord(o)} ${imp?'':lc('temp',o.temp)+' '}${lc('drink',o.drink)}`+(L.length?' with '+J(L):'');
   const fd=o.food.length?J(o.food.map(f=>FP[f])):'',fr=o.for=='go'?pick(day>=3?['to go','takeaway','to take away']:['to go']):pick(day>=3?['for here','eat in','dine in']:['for here']),Cp=s=>s[0].toUpperCase()+s.slice(1);
   const ms=o.misc.length?' Could I also get '+J(o.misc.map(m=>MP[m]))+'?':'';
   if(t=='tour')return pick(['Hello! One ','Hi, I would like a '])+core+', '+fr+', please.'+(fd?' And '+fd+'.':'');
@@ -251,7 +251,7 @@ function diff(o,s){
 function flash(s,c){const f=$('fl');f.textContent=s;f.style.color=c||'#fff';f.classList.remove('hide');clearTimeout(f.t);f.t=setTimeout(()=>f.classList.add('hide'),900)}
 function show(h,top){run=false;scrollTo(0,0);ov.className='ov'+(top?' top':'');ov.innerHTML=h}
 function hideOv(){ov.classList.add('hide');run=inDay}
-function menu(){inDay=false;cs=[];seats=[0,0,0];selId=0;lastSel=-1;show(`<h1>☕ Café Talk</h1><p>聽懂客人的英文點單，同時照顧好幾位客人<br>賺錢解鎖新單字包</p><div>🏆 最高天數 <b>${best}</b>　💰 存款 <b>${C}</b></div><button onclick="startDay()">開始 第 ${day} 天</button><button class="s" onclick="shop('menu()')">🛒 商店</button><button class="s" onclick="sheet('menu()')">📖 單字小抄</button><button class="s b" onclick="if(confirm('確定要清除所有存檔？')){localStorage.removeItem('c3');localStorage.removeItem('c3p');location.reload()}">🗑 重置存檔</button>`)}
+function menu(){inDay=false;cs=[];seats=[0,0,0,0,0];selId=0;lastSel=-1;show(`<h1>☕ Café Talk</h1><p>聽懂客人的英文點單，同時照顧好幾位客人<br>賺錢解鎖新單字包</p><div>🏆 最高天數 <b>${best}</b>　💰 存款 <b>${C}</b></div><button onclick="startDay()">開始 第 ${day} 天</button><button class="s" onclick="shop('menu()')">🛒 商店</button><button class="s" onclick="sheet('menu()')">📖 單字小抄</button><button class="s b" onclick="if(confirm('確定要清除所有存檔？')){localStorage.removeItem('c3');localStorage.removeItem('c3p');location.reload()}">🗑 重置存檔</button>`)}
 function sheet(back){
   const rows=a=>a.map(([x,y])=>`<div class=r><span>${x}</span><span>${y}</span></div>`).join('');
   const tot=Object.values(W).reduce((a,o)=>a+Object.keys(o).length,0),un=Object.keys(RN).reduce((a,r)=>a+avail(r).length,0);
@@ -259,11 +259,11 @@ function sheet(back){
 }
 function shop(back){
   show(`<h1>🛒 商店</h1><div>💰 <b>${C}</b>　第 ${day} 天</div><div class=w>`+SHOP.map(s=>{
-    const l=S[s.k]||0,m=s.c.length,c=s.c[l],lock=day<s.g;
-    return `<div class=r><span><b>${s.n}</b>${m>1?' Lv'+l+'/'+m:''}<br><small>${s.d}</small></span>${l>=m?'<span>✔ 已買</span>':lock?`<span>🔒 第${s.g}天</span>`:`<button class="b" onclick="buy('${s.k}','${back}')" ${C<c?'disabled':''}>💰${c}</button>`}</div>`}).join('')+`</div><button class="s" style="margin:12px 0" onclick="${back}">返回</button>`,1);
+    const l=S[s.k]||0,m=s.c.length,c=s.c[l],lock=day<s.g||(s.req&&!S[s.req]);
+    return `<div class=r><span><b>${s.n}</b>${m>1?' Lv'+l+'/'+m:''}<br><small>${s.d}</small></span>${l>=m?'<span>✔ 已買</span>':lock?`<span>🔒 ${day<s.g?'第'+s.g+'天':'需先買前置包'}</span>`:`<button class="b" onclick="buy('${s.k}','${back}')" ${C<c?'disabled':''}>💰${c}</button>`}</div>`}).join('')+`</div><button class="s" style="margin:12px 0" onclick="${back}">返回</button>`,1);
 }
-function buy(k,back){const s=SHOP.find(x=>x.k==k),c=s.c[S[k]||0];if(C<c||day<s.g)return;C-=c;S[k]=(S[k]||0)+1;save();vib(30);shop(back)}
-function startDay(){T=90;served=lost=dayC=0;miss={};cs=[];seats=[0,0,0];selId=0;lastSel=-1;arr=0;inDay=true;hideOv()}
+function buy(k,back){syncShelf();const s=SHOP.find(x=>x.k==k),c=s.c[S[k]||0];if(C<c||day<s.g||(s.req&&!S[s.req]))return;C-=c;S[k]=(S[k]||0)+1;save();syncShelf();vib(30);shop(back)}
+function startDay(){T=90;served=lost=dayC=penD=0;miss={};cs=[];seats=[0,0,0,0,0];selId=0;lastSel=-1;arr=0;inDay=true;hideOv()}
 function setPath(c,points,state){
   c.st=state;c.path=points.map(p=>({x:p.x,y:p.y}));c.arrived=false;
   const first=c.path.shift();
@@ -284,14 +284,16 @@ function startExit(c){
     setPath(c,[...back,...mid,{x:ENTRY.x,y:ENTRY.y+7}].map(p=>({x:p.x,y:p.y})),'out');
   }else setPath(c,tail,'out');
 }
+const qmax=()=>3+Math.min(2,Math.floor((day-1)/3)),NS=()=>3+(S.tbl||0);
 function spawn(){
-  const used=cs.filter(c=>c.st==='in'||c.st==='wait').map(c=>c.slot),free=[0,1,2].filter(i=>!used.includes(i));
+  if(cs.length>=8)return false;
+  const used=cs.filter(c=>c.st==='in'||c.st==='wait').map(c=>c.slot),free=[...Array(qmax()).keys()].filter(i=>!used.includes(i));
   if(!free.length)return false;
   const ts=['tour'];if(day>=2)ts.push('rush');if(day>=3)ts.push('reg');
   const t=pick(ts),o=makeOrder(t),pm=TY[t].p*(1+.2*(S.chairs||0))*Math.max(.65,1-day*.04),slot=free[0],q=QUEUE[slot];
-  const c={id:nid++,t,o,txt:say(o,t),zh:zhOf(o),sel:fresh(),face:pick(FACES),x:ENTRY.x,y:ENTRY.y,tx:ENTRY.x,ty:ENTRY.y,slot,st:'in',pat:pm,pm,seat:-1,tm:0,by:0,drink:''};
+  const c={id:nid++,t,o,txt:say(o,t),zh:zhOf(o),sel:fresh(),face:pick(FACES),x:ENTRY.x,y:ENTRY.y,tx:ENTRY.x,ty:ENTRY.y,slot,st:'in',pat:pm,pm,seat:-1,tm:0,by:0,drink:'',dir:1};
   cs.push(c);
-  setPath(c,[{x:180,y:211},{x:188,y:190},{x:181,y:174},{x:q.x,y:q.y}],'in');
+  setPath(c,slot<3?[{x:180,y:211},{x:188,y:190},{x:181,y:174},{x:q.x,y:q.y}]:[{x:180,y:211},{x:q.x,y:q.y}],'in');
   return true;
 }
 function fixSel(){
@@ -301,7 +303,7 @@ function fixSel(){
 }
 function upd(dt){
   T-=dt;tm+=dt;arr-=dt;
-  if(arr<=0&&T>8){arr=spawn()?Math.max(4,13-day*.8)*(.7+Math.random()*.6):1}
+  if(arr<=0&&T>8){arr=spawn()?Math.max(3.2,13-day*1)*(.7+Math.random()*.6):1}
   cs.forEach(c=>{
     if(c.st==='in'||c.st==='toSeat'||c.st==='out'){
       const dx=c.tx-c.x,dy=c.ty-c.y,dist=Math.hypot(dx,dy),step=72*dt;
@@ -309,7 +311,7 @@ function upd(dt){
       if(dist<=step+0.6){c.x=c.tx;c.y=c.ty;c.by=0;advancePath(c)}
     }else if(c.st==='wait'){
       c.by=Math.sin(tm*2+c.id)*.8;c.pat-=dt;
-      if(c.pat<=0){lost++;c.mad=1;startExit(c);flash('😠 客人離開了','#e5484d')}
+      if(c.pat<=0){lost++;c.mad=1;const pen=Math.round(BASE[c.o.drink]*.5);C=Math.max(0,C-pen);dayC-=pen;penD+=pen;save();startExit(c);flash('😠 客人離開了 −'+pen,'#e5484d')}
     }else if(c.st==='sit'){
       c.by=Math.sin(tm*2+c.id)*.5;c.tm-=dt;
       if(c.tm<=0){seats[c.seat]=0;startExit(c)}
@@ -330,7 +332,7 @@ function serve(){
     C+=p;dayC+=p;served++;
     Object.keys(RN).forEach(r=>[].concat(o[r]).forEach(v=>{const k=r+':'+v;if(P[k]>0)P[k]--}));
     save();ls.set('c3p',P);vib(30);flash('✔ +'+p,'#2fb36b');fx.push({x:c.x,y:c.y-20,t:0});
-    const seat=o.for=='here'?seats.indexOf(0):-1;
+    const seat=o.for=='here'?seats.slice(0,NS()).indexOf(0):-1;
     c.drink=o.temp=='ice'?'🧋':'☕';
     if(seat>=0){
       seats[seat]=1;c.seat=seat;
@@ -345,7 +347,7 @@ function serve(){
 function endDay(){
   inDay=false;cs=[];best=Math.max(best,day);const n=day;day++;save();
   const ms=Object.keys(miss).map(k=>{const[r,v]=k.split(':');return `<div class=r><span>${W[r][v][0]}</span><span>${W[r][v][1]}</span></div>`}).join('');
-  lastSum=`<h1>第 ${n} 天結束</h1><div>服務 ${served} 位　離開 ${lost} 位</div><div>今日收入 💰 <b>${dayC}</b>　存款 💰 <b>${C}</b></div>${ms?'<h3>這天答錯的單字（之後會更常出現）</h3><div class=w>'+ms+'</div>':''}<button onclick="startDay()">繼續 第 ${day} 天</button><button class="s" onclick="shop('sum()')">🛒 商店</button><button class="s" onclick="menu()">回選單</button>`;
+  lastSum=`<h1>第 ${n} 天結束</h1><div>服務 ${served} 位　離開 ${lost} 位</div><div>今日淨收入 💰 <b>${dayC}</b>　存款 💰 <b>${C}</b></div>${penD?'<div>😠 客人氣走扣款 <b>−'+penD+'</b></div>':''}${ms?'<h3>這天答錯的單字（之後會更常出現）</h3><div class=w>'+ms+'</div>':''}<button onclick="startDay()">繼續 第 ${day} 天</button><button class="s" onclick="shop('sum()')">🛒 商店</button><button class="s" onclick="menu()">回選單</button>`;
   sum();
 }
 const sum=()=>show(lastSum,1);
@@ -353,7 +355,7 @@ function panel(){
   const c=cs.find(c=>c.id==selId);
   $('pn').innerHTML=c?Object.keys(RN).map(r=>{
     const a=avail(r);if(!a.length)return'';
-    return `<div class="row${bad.includes(r)?' bad':''}">`+a.map(v=>`<button class="o${(Array.isArray(c.sel[r])?c.sel[r].includes(v):c.sel[r]==v)?' on':''}" data-r="${r}" data-v="${v}">${W[r][v][0]}<small>${W[r][v][1]}</small></button>`).join('')+'</div>';
+    return `<div class="row${bad.includes(r)?' bad':''}">`+a.map(v=>`<button class="o${(Array.isArray(c.sel[r])?c.sel[r].includes(v):c.sel[r]==v)?' on':''}" data-r="${r}" data-v="${v}">${W[r][v][0]}</button>`).join('')+'</div>';
   }).join(''):'';
 }
 function hud(){
@@ -477,7 +479,7 @@ function drawTable(i){
 function scene(){
   g.clearRect(0,0,360,240);g.textAlign='center';g.textBaseline='middle';
   const L=cs.map(c=>({y:c.y,f:()=>drawC(c)}));
-  SEAT_POS.forEach((p,i)=>{L.push({y:p.y-8,f:()=>drawChair(i)});L.push({y:p.y+10,f:()=>drawTable(i)})});
+  SEAT_POS.slice(0,NS()).forEach((p,i)=>{L.push({y:p.y-8,f:()=>drawChair(i)});L.push({y:p.y+10,f:()=>drawTable(i)})});
   L.sort((a,b)=>a.y-b.y).forEach(o=>o.f());
   g.font='16px serif';fx.forEach(f=>{f.t+=.033;g.globalAlpha=Math.max(0,1-f.t);g.fillText('💖',f.x,f.y-f.t*30)});g.globalAlpha=1;
   for(let i=fx.length-1;i>=0;i--)if(fx[i].t>=1)fx.splice(i,1);
@@ -501,10 +503,10 @@ $('pn').onclick=e=>{
   vib(8);panel();
 };
 $('sv').onclick=serve;
-$('hb').onclick=()=>{hint=!hint;ls.set('c3h',hint);flash(hint?'💡 中文提示：開':'💡 中文提示：關','#e69a00')};
+$('hb').onclick=()=>{hint=!hint;ls.set('c3h2',hint);flash(hint?'💡 中文提示：開':'💡 中文提示：關','#e69a00')};
 $('sb').onclick=()=>sheet('hideOv()');
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&run)show('<h1>⏸ 暫停</h1><button onclick="hideOv()">繼續</button>')});
 setInterval(()=>{if(lastSel!=selId&&run)fixSel()},200);
-menu();requestAnimationFrame(loop);
+syncShelf();menu();requestAnimationFrame(loop);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js');
 </script></body></html>
