@@ -7,22 +7,29 @@
 <title>Café Talk 咖啡館</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;min-height:100%;color:#594438;font-family:"Nunito","Quicksand","PingFang TC","Noto Sans TC","Microsoft JhengHei",ui-rounded,system-ui,sans-serif;background:#e9dfcf}
+html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;color:#594438;font-family:"Nunito","Quicksand","PingFang TC","Noto Sans TC","Microsoft JhengHei",ui-rounded,system-ui,sans-serif;background:#e9dfcf}
 body{background:radial-gradient(circle at 15% 5%,#f8efe1 0,#eee3d3 48%,#dfd2bf 100%)}
-#app{max-width:480px;min-height:100vh;margin:0 auto;background:#fbf6ec;position:relative;padding:0 0 18px;box-shadow:0 0 30px #6b4a2620;border-left:1px solid #ffffff80;border-right:1px solid #ffffff80}
-#top{display:flex;justify-content:space-between;align-items:center;padding:12px 14px 10px;font-weight:800;font-size:13px;gap:5px;color:#624936}
+#app{max-width:480px;height:100vh;height:100dvh;margin:0 auto;display:flex;flex-direction:column;overflow:hidden;background:#fbf6ec;position:relative;padding:0 0 calc(10px + env(safe-area-inset-bottom));box-shadow:0 0 30px #6b4a2620;border-left:1px solid #ffffff80;border-right:1px solid #ffffff80}
+#top{flex:none;display:flex;justify-content:space-between;align-items:center;padding:8px 14px 6px;font-weight:800;font-size:13px;gap:5px;color:#624936}
 #top>span:not(:last-child){background:#fffdf7;border:1px solid #eadcc8;border-radius:999px;padding:6px 10px;box-shadow:0 2px 0 #e8ddcc;white-space:nowrap}
 #top button{padding:5px 10px;font-size:15px;box-shadow:0 2px 0 #7f8e68}
-#scene{position:relative;width:calc(100% - 24px);margin:5px 12px 0;aspect-ratio:3/2;overflow:hidden;border-radius:17px;background:#ead9bd;box-shadow:0 0 0 4px #fffdf7,0 7px 0 4px #d9c7a9,0 12px 22px #61472b20}
+#scene{flex:none;position:relative;width:min(calc(100% - 24px),42vh);width:min(calc(100% - 24px),42dvh);margin:4px auto 0;aspect-ratio:3/2;overflow:hidden;border-radius:17px;background:#ead9bd;box-shadow:0 0 0 4px #fffdf7,0 7px 0 4px #d9c7a9,0 12px 22px #61472b20}
 #cafeScene{position:absolute;inset:0;width:100%;height:100%;display:block}
 #cv{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:manipulation}
-#cust{position:relative;margin:18px 14px 12px;padding:9px 13px;background:#fffdf8;border:2px solid #d9c9ae;border-radius:15px;box-shadow:0 3px 0 #e8dece}
+#cust{flex:none;position:relative;margin:14px 14px 8px;padding:6px 12px;background:#fffdf8;border:2px solid #d9c9ae;border-radius:15px;box-shadow:0 3px 0 #e8dece}
 #cust:before{content:"";position:absolute;top:-9px;left:38px;width:13px;height:13px;background:#fffdf8;border-left:2px solid #d9c9ae;border-top:2px solid #d9c9ae;transform:rotate(45deg)}
 #ty{font-size:12px;color:#9a7651;font-weight:800;letter-spacing:.02em}
-#bub{font-size:15px;line-height:1.45;min-height:42px;font-weight:750;color:#594438}
-#hint{color:#9c8873;font-size:12px;min-height:16px}
-.row{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 7px}
-.o{flex:1 1 22%;min-height:43px;font-size:12px;font-weight:750;padding:4px 2px;border-radius:11px;background:#fffdf8;color:#5c493b;border:1.5px solid #d9c9ae;box-shadow:0 2px 0 #d9c9ae;line-height:1.15;overflow:hidden;font-family:inherit}
+#bub{font-size:14.5px;line-height:1.35;min-height:38px;font-weight:750;color:#594438}
+#hint{color:#9c8873;font-size:12px}
+.row{display:flex;flex-wrap:wrap;gap:4px;padding:0 12px 4px}
+#pn{flex:1 1 auto;min-height:0;overflow-y:auto;padding-top:2px}
+.o.pk{text-align:center;white-space:nowrap;text-overflow:ellipsis}
+.o.bd.on{background:#c96d57;border-color:#aa5645;box-shadow:0 2px 0 #984a3b}
+#pk{position:absolute;left:0;right:0;bottom:0;z-index:6;max-height:72%;overflow-y:auto;background:#fffdf8;border-radius:18px 18px 0 0;box-shadow:0 -8px 24px #61472b40;padding:12px 12px calc(14px + env(safe-area-inset-bottom))}
+#pk h4{margin:0 0 8px;color:#9a7651;font-size:13px}
+#pk .g{display:flex;flex-wrap:wrap;gap:6px}
+#pk .o{min-height:40px}
+.o{flex:1 1 22%;min-height:32px;font-size:12px;font-weight:750;padding:2px 3px;border-radius:11px;background:#fffdf8;color:#5c493b;border:1.5px solid #d9c9ae;box-shadow:0 2px 0 #d9c9ae;line-height:1.15;overflow:hidden;font-family:inherit}
 .o small{display:block;font-size:10px;color:#a28d76;font-weight:600}
 .o:active{transform:translateY(2px);box-shadow:0 0 0 #d9c9ae}
 .o.on{background:linear-gradient(#829b70,#6f895f);color:#fff;border-color:#607d52;box-shadow:0 2px 0 #536d47}
@@ -32,9 +39,9 @@ button{border:0;border-radius:999px;background:linear-gradient(#8da77b,#718d60);
 button.s{background:linear-gradient(#bd9c70,#a98255);box-shadow:0 3px 0 #896744}
 button:active{transform:translateY(2px);box-shadow:0 1px 0 #536f47}
 button:disabled{opacity:.45}
-#sv{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:4;display:block;width:calc(100% - 28px);margin:10px 14px 0;background:linear-gradient(#d58b61,#bd704b);box-shadow:0 4px 0 #97563b,0 8px 18px #61472b40;font-size:19px;letter-spacing:.02em}
+#sv{flex:none;display:block;width:calc(100% - 28px);margin:6px 14px 0;padding:10px 26px;background:linear-gradient(#d58b61,#bd704b);box-shadow:0 4px 0 #97563b,0 8px 18px #61472b40;font-size:19px;letter-spacing:.02em}
 .b{font-size:14px;padding:6px 14px}
-.ov{position:absolute;inset:0;background:#f7f0e5f7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;z-index:5;min-height:100%;backdrop-filter:blur(4px)}
+.ov{position:absolute;inset:0;background:#f7f0e5f7;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px;text-align:center;z-index:5;min-height:100%;overflow-y:auto;backdrop-filter:blur(4px)}
 .ov.top{justify-content:flex-start}
 .hide{display:none!important}
 h1{margin:0;font-size:30px;color:#70865d;text-shadow:0 2px 0 #fff}
@@ -43,12 +50,14 @@ h3{margin:12px 0 4px;color:#9a7651;text-align:left;width:100%}
 .w{width:100%}
 small{color:#9c8873}
 #fl{position:fixed;left:0;right:0;top:35%;text-align:center;font-size:28px;font-weight:900;pointer-events:none;-webkit-text-stroke:5px #fffdf7;paint-order:stroke fill;z-index:9}
-@media(min-width:500px){#app{min-height:100vh}}
+
 @keyframes nod{0%,60%,100%{transform:rotate(0)}66%{transform:rotate(7deg)}72%{transform:rotate(-1deg)}78%{transform:rotate(6deg)}86%{transform:rotate(0)}}
-@keyframes wipe{0%,100%{transform:translate(0,0)}25%{transform:translate(-2.4px,-1px)}50%{transform:translate(2.4px,0)}75%{transform:translate(-2.4px,-1px)}}
+@keyframes smile{0%,58%,100%{transform:scale(1)}66%,84%{transform:scale(1.55,1.7)}}
+@keyframes blush{0%,58%,100%{opacity:0}66%,84%{opacity:.55}}
 @keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
 .bh{transform-box:fill-box;transform-origin:50% 100%;animation:nod 6s ease-in-out infinite}
-.bw{animation:wipe 1.2s ease-in-out infinite}
+.bm{transform-box:fill-box;transform-origin:50% 0;animation:smile 6s ease-in-out infinite}
+.bc{animation:blush 6s ease-in-out infinite}
 .be{transform-box:fill-box;transform-origin:50% 50%;animation:blink 4s infinite}
 </style></head>
 <body><div id="app">
@@ -101,14 +110,14 @@ small{color:#9c8873}
   <path d="M-13 -14Q-12 -23 -5 -24H5Q12 -23 13 -14L11 4H-11Z" fill="#f8f1e5" stroke="#88664e" stroke-width="1.2"/>
   <path d="M-9 -12L-5 -20H5L9 -12L6 3H-6Z" fill="#78906d" stroke="#58704f" stroke-width="1"/>
   <path d="M-5 -18L0 -11L5 -18" fill="none" stroke="#e8d8bd" stroke-width="1.4"/>
-  <g class="bw"><path d="M-10 -11L-6 -3M10 -11L6 -3" stroke="#e9b991" stroke-width="4" stroke-linecap="round"/><path d="M-4.5 -9H4.5L3.4 -1H-3.4Z" fill="#fbf3e4" stroke="#9a6a49" stroke-width=".9"/><path d="M-4 -6.5H4" stroke="#b8734c" stroke-width="1.2"/><path d="M-7 -4Q0 0 7 -4" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></g>
+  <path d="M-10 -11L-15 -4M10 -11L15 -4" stroke="#e9b991" stroke-width="4" stroke-linecap="round"/>
   <!-- neck and head --><g class="bh">
   <rect x="-3" y="-29" width="6" height="7" rx="2" fill="#e8b991"/>
   <ellipse cx="0" cy="-35" rx="9" ry="10" fill="#efc39e" stroke="#9a6b4e" stroke-width="1"/>
   <path d="M-9 -35Q-10 -47 0 -47Q11 -47 9 -34L6 -38L2 -41L-2 -37L-6 -40Z" fill="#584437" stroke="#45352b" stroke-width="1"/>
   <path d="M-7 -32Q-10 -27 -7 -25" fill="none" stroke="#584437" stroke-width="3" stroke-linecap="round"/>
   <g class="be"><circle cx="-3" cy="-34" r=".9" fill="#49372d"/><circle cx="3" cy="-34" r=".9" fill="#49372d"/></g>
-  <path d="M-2 -30Q0 -28 2 -30" fill="none" stroke="#b66e5f" stroke-width=".9" stroke-linecap="round"/>
+  <g class="bc"><ellipse cx="-5.6" cy="-31" rx="2.1" ry="1.2" fill="#f08f86" opacity="0"/><ellipse cx="5.6" cy="-31" rx="2.1" ry="1.2" fill="#f08f86" opacity="0"/></g><g class="bm"><path d="M-2 -30Q0 -28 2 -30" fill="none" stroke="#b66e5f" stroke-width=".9" stroke-linecap="round"/></g>
 </g>
   <circle cx="0" cy="-15" r="1.5" fill="#e4c89e"/>
 </g>
@@ -137,6 +146,7 @@ small{color:#9c8873}
 <div id="pn"></div>
 <button id="sv">✔ 出餐 Serve</button>
 <div id="fl" class="hide"></div>
+<div id="pk" class="hide"></div>
 <div class="ov hide" id="ov"></div>
 </div>
 <script>
@@ -181,21 +191,25 @@ const $=id=>document.getElementById(id),ov=$('ov');let g=$('cv').getContext('2d'
 const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const vib=n=>{try{navigator.vibrate&&navigator.vibrate(n)}catch(e){}};
-const D=ls.get('c3',{});
-let C=D.C||0,S=D.S||{},day=D.day||1,best=D.best||0,hint=ls.get('c3h2',false),P=ls.get('c3p',{});
+const TEST=ls.get('c3mode','')==='test',K=TEST?'c3t':'c3',KP=TEST?'c3pt':'c3p';
+const FULL={beans:2,chairs:2,milk:1,dA:1,ext:1,pasA:1,syr:1,dB:1,top:1,misc:1,dC:1,pasB:1,pasC:1,tbl:2,dD:1,syr2:1,pasD:1,misc2:1};
+const D=ls.get(K,TEST?{C:3000,S:FULL,day:10,best:9}:{});
+let C=D.C||0,S=D.S||{},day=D.day||1,best=D.best||0,hint=ls.get('c3h2',false),P=ls.get(KP,{});
 let T=90,cs=[],seats=[0,0,0,0,0],selId=0,lastSel=-1,nid=1,arr=0,tm=0,served=0,lost=0,dayC=0,penD=0,miss={},bad=[],run=false,inDay=false,lastSum='';
 const QUEUE=[{x:151,y:137},{x:173,y:151},{x:195,y:165},{x:217,y:179},{x:239,y:193}];
-const SEAT_POS=[{x:240,y:136},{x:306,y:136},{x:92,y:180},{x:212,y:108},{x:276,y:110}];
+const SEAT_POS=[{x:240,y:136},{x:306,y:136},{x:276,y:110},{x:212,y:108},{x:128,y:164}];
 const ROUTES=[
  [{x:212,y:150},{x:214,y:130},{x:230,y:129},{x:240,y:136}],
  [{x:212,y:150},{x:214,y:120},{x:292,y:119},{x:306,y:136}],
- [{x:182,y:188},{x:134,y:184},{x:108,y:170},{x:92,y:180}],
+ [{x:206,y:150},{x:186,y:128},{x:182,y:106},{x:200,y:96},{x:264,y:95},{x:276,y:108}],
  [{x:206,y:150},{x:186,y:128},{x:182,y:106},{x:198,y:99},{x:212,y:106}],
- [{x:206,y:150},{x:186,y:128},{x:182,y:106},{x:200,y:96},{x:264,y:95},{x:276,y:108}]];
+ [{x:178,y:178},{x:142,y:154},{x:118,y:152},{x:128,y:164}]];
 const ENTRY={x:180,y:230};
 const SHELF={cro:'pasA',chz:'pasA',muf:'pasA',bag:'pasA',cook:'pasB',sand:'pasB',wafl:'pasB',brow:'pasB',sco:'pasC',don:'pasC',tira:'pasC',panc:'pasC'};
 function syncShelf(){for(const k in SHELF){const e=document.getElementById('sh_'+k);if(e)e.style.display=S[SHELF[k]]?'':'none'}}
-const save=()=>ls.set('c3',{C,S,day,best});
+const save=()=>ls.set(K,{C,S,day,best});
+const setMode=m=>{ls.set('c3mode',m);location.reload()};
+const testDay=n=>{day=n;C=Math.max(C,3000);save();menu()};
 const fresh=()=>({size:null,temp:null,drink:null,milk:'none',syrup:'none',ex:[],food:[],misc:[],for:'here'});
 const U=(k,a)=>S[k]?a:[];
 function avail(r){switch(r){
@@ -249,9 +263,9 @@ function diff(o,s){
   return b;
 }
 function flash(s,c){const f=$('fl');f.textContent=s;f.style.color=c||'#fff';f.classList.remove('hide');clearTimeout(f.t);f.t=setTimeout(()=>f.classList.add('hide'),900)}
-function show(h,top){run=false;scrollTo(0,0);ov.className='ov'+(top?' top':'');ov.innerHTML=h}
+function show(h,top){run=false;pkRow=null;$('pk').classList.add('hide');scrollTo(0,0);ov.className='ov'+(top?' top':'');ov.innerHTML=h}
 function hideOv(){ov.classList.add('hide');run=inDay}
-function menu(){inDay=false;cs=[];seats=[0,0,0,0,0];selId=0;lastSel=-1;show(`<h1>☕ Café Talk</h1><p>聽懂客人的英文點單，同時照顧好幾位客人<br>賺錢解鎖新單字包</p><div>🏆 最高天數 <b>${best}</b>　💰 存款 <b>${C}</b></div><button onclick="startDay()">開始 第 ${day} 天</button><button class="s" onclick="shop('menu()')">🛒 商店</button><button class="s" onclick="sheet('menu()')">📖 單字小抄</button><button class="s b" onclick="if(confirm('確定要清除所有存檔？')){localStorage.removeItem('c3');localStorage.removeItem('c3p');location.reload()}">🗑 重置存檔</button>`)}
+function menu(){inDay=false;cs=[];seats=[0,0,0,0,0];selId=0;lastSel=-1;show(`<h1>☕ Café Talk</h1><p>聽懂客人的英文點單，同時照顧好幾位客人<br>賺錢解鎖新單字包</p><div>🏆 最高天數 <b>${best}</b>　💰 存款 <b>${C}</b></div><button onclick="startDay()">開始 第 ${day} 天</button><button class="s" onclick="shop('menu()')">🛒 商店</button><button class="s" onclick="sheet('menu()')">📖 單字小抄</button>${TEST?`<div>🧪 <b>測試模式</b>（獨立存檔，不影響正式進度）</div><div style="display:flex;gap:6px"><button class="s b" onclick="testDay(7)">第7天</button><button class="s b" onclick="testDay(10)">第10天</button><button class="s b" onclick="testDay(15)">第15天</button></div><button class="s b" onclick="setMode('')">⬅ 回到正式遊戲</button>`:`<button class="s b" onclick="setMode('test')">🧪 試玩後期關卡（不影響存檔）</button>`}<button class="s b" onclick="if(confirm('確定要清除所有存檔？')){localStorage.removeItem(K);localStorage.removeItem(KP);location.reload()}">🗑 重置存檔</button>`)}
 function sheet(back){
   const rows=a=>a.map(([x,y])=>`<div class=r><span>${x}</span><span>${y}</span></div>`).join('');
   const tot=Object.values(W).reduce((a,o)=>a+Object.keys(o).length,0),un=Object.keys(RN).reduce((a,r)=>a+avail(r).length,0);
@@ -280,7 +294,7 @@ function advancePath(c){
 function startExit(c){
   const tail=[{x:190,y:194},{x:180,y:211},{x:ENTRY.x,y:ENTRY.y+7}];
   if(c.st==='sit'&&c.seat>=0){
-    const back=ROUTES[c.seat].slice(0,-1).reverse(),mid=c.seat===2?[{x:186,y:212}]:[{x:226,y:176},{x:208,y:204},{x:190,y:218}];
+    const back=ROUTES[c.seat].slice(0,-1).reverse(),mid=c.seat===4?[{x:186,y:196},{x:180,y:214}]:[{x:226,y:176},{x:208,y:204},{x:190,y:218}];
     setPath(c,[...back,...mid,{x:ENTRY.x,y:ENTRY.y+7}].map(p=>({x:p.x,y:p.y})),'out');
   }else setPath(c,tail,'out');
 }
@@ -299,7 +313,7 @@ function spawn(){
 function fixSel(){
   const w=cs.filter(c=>c.st=='wait');
   if(!w.some(c=>c.id==selId))selId=w.length?w.sort((a,b)=>a.slot-b.slot)[0].id:0;
-  if(selId!=lastSel){lastSel=selId;bad=[];panel()}
+  if(selId!=lastSel){lastSel=selId;bad=[];pkRow=null;renderPk();panel()}
 }
 function upd(dt){
   T-=dt;tm+=dt;arr-=dt;
@@ -331,7 +345,7 @@ function serve(){
     p=Math.round(p*TY[c.t].m*(1+.15*(S.beans||0))*(c.pat>c.pm*.6?1.1:1));
     C+=p;dayC+=p;served++;
     Object.keys(RN).forEach(r=>[].concat(o[r]).forEach(v=>{const k=r+':'+v;if(P[k]>0)P[k]--}));
-    save();ls.set('c3p',P);vib(30);flash('✔ +'+p,'#2fb36b');fx.push({x:c.x,y:c.y-20,t:0});
+    save();ls.set(KP,P);vib(30);flash('✔ +'+p,'#2fb36b');fx.push({x:c.x,y:c.y-20,t:0});
     const seat=o.for=='here'?seats.slice(0,NS()).indexOf(0):-1;
     c.drink=o.temp=='ice'?'🧋':'☕';
     if(seat>=0){
@@ -340,7 +354,7 @@ function serve(){
     }else startExit(c);
   }else{
     b.forEach(r=>[].concat(o[r]).forEach(v=>{const k=r+':'+v;P[k]=(P[k]||0)+1;miss[k]=1}));
-    ls.set('c3p',P);bad=b;c.pat-=c.pm*.2;vib(100);flash('✘ 不對喔','#ff7a45');panel();
+    ls.set(KP,P);bad=b;c.pat-=c.pm*.2;vib(100);flash('✘ 不對喔','#ff7a45');panel();
     setTimeout(()=>{bad=[];panel()},1200);
   }
 }
@@ -351,15 +365,42 @@ function endDay(){
   sum();
 }
 const sum=()=>show(lastSum,1);
+const RT={size:'Size',drink:'Drink',milk:'Milk',syrup:'Syrup',ex:'Extras',food:'Food',misc:'Add-ons'};
+let pkRow=null;
+const isOn=(c,r,v)=>Array.isArray(c.sel[r])?c.sel[r].includes(v):c.sel[r]==v;
+const optBtn=(c,r,v)=>`<button class="o${isOn(c,r,v)?' on':''}" data-r="${r}" data-v="${v}">${W[r][v][0]}</button>`;
+function pkBtn(c,r){const v=c.sel[r],on=Array.isArray(v)?v.length>0:(v&&v!=='none'),t=Array.isArray(v)?v.map(x=>W[r][x][0]).join(' + '):(v?W[r][v][0]:'');return `<button class="o pk${on?' on':''}${bad.includes(r)?' bd':''}" data-pk="${r}" style="flex:1 1 30%">${on?t:RT[r]} ▾</button>`}
+function drawPanel(c,coll){
+  let h='',grp='';
+  const flush=()=>{if(grp){h+=`<div class="row">${grp}</div>`;grp=''}};
+  Object.keys(RN).forEach(r=>{const a=avail(r);if(!a.length)return;
+    if(coll.has(r))grp+=pkBtn(c,r);
+    else{flush();h+=`<div class="row${bad.includes(r)?' bad':''}">`+a.map(v=>optBtn(c,r,v)).join('')+'</div>'}});
+  flush();return h;
+}
 function panel(){
-  const c=cs.find(c=>c.id==selId);
-  $('pn').innerHTML=c?Object.keys(RN).map(r=>{
-    const a=avail(r);if(!a.length)return'';
-    return `<div class="row${bad.includes(r)?' bad':''}">`+a.map(v=>`<button class="o${(Array.isArray(c.sel[r])?c.sel[r].includes(v):c.sel[r]==v)?' on':''}" data-r="${r}" data-v="${v}">${W[r][v][0]}</button>`).join('')+'</div>';
-  }).join(''):'';
+  const c=cs.find(c=>c.id==selId),pn=$('pn'),coll=new Set();
+  if(!c){pn.innerHTML='';return}
+  pn.innerHTML=drawPanel(c,coll);
+  for(let g2=0;g2<8&&pn.scrollHeight>pn.clientHeight+1;g2++){
+    const cd=n=>Object.keys(RN).filter(r=>!coll.has(r)&&avail(r).length>n).sort((x,y)=>avail(y).length-avail(x).length)[0],k=cd(4)||cd(2);
+    if(!k)break;coll.add(k);pn.innerHTML=drawPanel(c,coll);
+  }
+}
+function renderPk(){
+  const c=cs.find(c=>c.id==selId),el=$('pk');
+  if(!c||!pkRow){el.classList.add('hide');pkRow=null;return}
+  el.innerHTML=`<h4>${RT[pkRow]}</h4><div class="g">${avail(pkRow).map(v=>optBtn(c,pkRow,v)).join('')}</div>`+(Array.isArray(c.sel[pkRow])?'<button id="pkd" style="margin-top:10px;width:100%">Done ✔</button>':'');
+  el.classList.remove('hide');
+}
+function setOpt(r,v){
+  const c=cs.find(c=>c.id==selId);if(!run||!c)return;
+  const s2=c.sel;
+  if(Array.isArray(s2[r])){const i=s2[r].indexOf(v);i<0?s2[r].push(v):s2[r].splice(i,1)}else{s2[r]=v;if(pkRow===r)pkRow=null}
+  vib(8);panel();renderPk();
 }
 function hud(){
-  $('d').textContent='第 '+day+' 天';$('t').textContent='⏱ '+Math.max(0,Math.ceil(T));$('c').textContent='💰 '+C;
+  $('d').textContent='第 '+day+' 天'+(TEST?' 🧪':'');$('t').textContent='⏱ '+Math.max(0,Math.ceil(T));$('c').textContent='💰 '+C;
   const c=cs.find(c=>c.id==selId);
   $('ty').textContent=c?TY[c.t].e+' '+TY[c.t].n+'（點場景裡的客人可切換）':'';
   $('bub').textContent=c?'“'+c.txt+'”':(inDay?'等待客人上門…':'');
@@ -497,11 +538,11 @@ $('cv').onpointerdown=e=>{
   if(w&&w.d<34){selId=w.c.id;fixSel();}
 };
 $('pn').onclick=e=>{
-  const b=e.target.closest('.o'),c=cs.find(c=>c.id==selId);if(!b||!run||!c)return;
-  const r=b.dataset.r,v=b.dataset.v,s=c.sel;
-  if(Array.isArray(s[r])){const i=s[r].indexOf(v);i<0?s[r].push(v):s[r].splice(i,1)}else s[r]=v;
-  vib(8);panel();
+  const k=e.target.closest('[data-pk]');if(k&&run&&cs.some(c=>c.id==selId)){pkRow=k.dataset.pk;renderPk();return}
+  const b=e.target.closest('.o');if(b)setOpt(b.dataset.r,b.dataset.v);
 };
+$('pk').onclick=e=>{if(e.target.id==='pkd'){pkRow=null;renderPk();return}const b=e.target.closest('.o');if(b)setOpt(b.dataset.r,b.dataset.v)};
+try{new ResizeObserver(()=>panel()).observe($('pn'))}catch(e){addEventListener('resize',()=>panel())}
 $('sv').onclick=serve;
 $('hb').onclick=()=>{hint=!hint;ls.set('c3h2',hint);flash(hint?'💡 中文提示：開':'💡 中文提示：關','#e69a00')};
 $('sb').onclick=()=>sheet('hideOv()');
